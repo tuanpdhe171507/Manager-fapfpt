@@ -50,79 +50,54 @@ public class SessionDBContext extends DBContext {
         }
         return list;
     }
-
-    public ArrayList<Attendence> getAttendencesByLession(int seid) {
-        ArrayList<Attendence> atts = new ArrayList<>();
+    
+    public Session getSessionByID(int id) {
+        
+        String sql = "select SessionID,Date,IsTaken,GroupID,TeacherID,RoomID,TimeSlotID\n"
+                + "from [Session]"
+                + "where SessionID=? ";
         try {
-            String sql = "Select s.StudentID,gr.GroupName,s.RollNumber,s.LastName,s.FirstName,a.isPresent,a.Comment,s.[Image] from Student as s \n"
-                    + "INNER join GroupStudent as g\n"
-                    + "On s.StudentID=g.StudentID \n"
-                    + "Inner join [Session] as se\n"
-                    + "On se.GroupID= g.GroupID\n"
-                    + "Inner join [Group] as gr\n"
-                    + "On gr.GroupID=se.GroupID\n"
-                    + "Left join [Attendence]as a\n"
-                    + "On a.SessionID=se.SessionID and s.StudentID=a.StudentID\n"
-                    + "where se.SessionID=?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, seid);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Attendence a = new Attendence();
-                Student s = new Student();
-                Session ses = new Session();
-                Group group= new Group();
-                
-                s.setId(rs.getInt("StudentID"));
-                group.setGroupName(rs.getString("GroupName"));
-                s.setGroup(group);
-                             
-                s.setRollNumber(rs.getString("RollNumber"));
-                s.setLastName("LastName");
-                s.setFristName(rs.getString("FirstName"));
-                
-                
-                a.setIsPresent(rs.getBoolean("isPresent"));
-                a.setComment(rs.getString("Comment"));
-                s.setImage(rs.getString("Image"));
-                a.setStudent(s);
-                
-                
-                if (a.getAttendenceID()!= 0) {
-//                    a.setDescription(rs.getString("description"));
-//                    a.setPresent(rs.getBoolean("isPresent"));
-//                    a.setTime(rs.getTimestamp("capturedtime"));
-                }
-                atts.add(a);
-            }
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Session session = new Session();
+                session.setSessionID(rs.getInt("SessionID"));
+                session.setDate(rs.getDate("Date"));
+                session.setIsTaken(rs.getBoolean("IsTaken"));
+                session.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
+                session.setTeacher(new TeacherDBContext().getByTeacherID(rs.getInt("TeacherID")));
+                session.setRoom(new RoomDBContext().getRoomByID(rs.getInt("RoomID")));
+                session.setTimeslot(new TimeSlotDBContext().getTimeSlotByID(rs.getInt("TimeSlotID")));
 
+                return session;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return atts;
+        return null;
     }
-
-    public static void main(String[] args) {
+ public static void main(String[] args) {
         // Tạo một đối tượng SessionDBContext
         SessionDBContext sessionDBContext = new SessionDBContext();
 
-        // Thay đổi biến seid thành giá trị thích hợp
-        int seid = 1;
+        // Thay đổi biến id thành giá trị thích hợp
+        int id = 1;
 
-        // Gọi phương thức getAttendencesByLession
-        ArrayList<Attendence> attendences = sessionDBContext.getAttendencesByLession(seid);
+        // Gọi phương thức getSessionByID
+        Session session = sessionDBContext.getSessionByID(id);
 
-        // In ra thông tin về các điểm danh
-        for (Attendence attendance : attendences) {
-            System.out.println("Student ID: " + attendance.getStudent().getId());
-            System.out.println("Group Name: " + attendance.getStudent().getGroup().getGroupName());
-            System.out.println("Roll Number: " + attendance.getStudent().getRollNumber());
-            System.out.println("Last Name: " + attendance.getStudent().getLastName());
-            System.out.println("First Name: " + attendance.getStudent().getFristName());
-            System.out.println("Is Present: " + attendance.getIsPresent());
-            System.out.println("Comment: " + attendance.getComment());
-            System.out.println("Image: " + attendance.getStudent().getImage());
-            System.out.println("--------------------------------------------");
+        // Kiểm tra xem session có tồn tại hay không
+        if (session != null) {
+            System.out.println("Session ID: " + session.getSessionID());
+            System.out.println("Date: " + session.getDate());
+            System.out.println("Is Taken: " + session.getIsTaken());
+            System.out.println("Group ID: " + session.getGroup());
+            System.out.println("Teacher ID: " + session.getTeacher());
+            
+        } else {
+            System.out.println("Session not found.");
         }
     }
+
 }
