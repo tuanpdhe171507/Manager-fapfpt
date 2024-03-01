@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -112,30 +114,30 @@ public class WeekTimeTableDBContext extends DBContext {
 
     public static void main(String[] args) {
 //
-        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
-        List<WeekTimeTable> list = c.getListDayAndMonthTimeTables(2024);
-        for (WeekTimeTable weekTimeTable : list) {
-            System.out.println(weekTimeTable.getWeekRange());
-        }
-
 //        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
-//        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
-//        try {
-//            Date startDate = Date.valueOf("2024-01-01");
-//            Date endDate = Date.valueOf("2024-01-07");
-//            List<Date> daysInWeek = c.getListDaysInWeek(startDate, endDate);
-//            for (Date date : daysInWeek) {
-//                System.out.println(dateFormat.format(date));
-//            }
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Invalid date format.");
+//        List<WeekTimeTable> list = c.getListDayAndMonthTimeTables(2024);
+//        for (WeekTimeTable weekTimeTable : list) {
+//            System.out.println(weekTimeTable.getWeekRange());
 //        }
-        //System.out.println(c.getDayAndMonth().getStartDate());
+
+        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        try {
+            Date startDate = Date.valueOf("2024-01-01");
+            Date endDate = Date.valueOf("2024-01-07");
+            List<Date> daysInWeek = c.getListDaysInWeek(startDate, endDate);
+            for (Date date : daysInWeek) {
+                System.out.println(dateFormat.format(date));
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid date format.");
+        }
+       // System.out.println(c.getDayAndMonth().getStartDate());
 //        Date currentDate = new Date();
 //
 //        int day = currentDate.getDate();
-//        int month = currentDate.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0, nên cần cộng thêm 1
-//        int year = currentDate.getYear() + 1900; // Lưu ý: getYear trả về số năm kể từ năm 1900
+//        int month = currentDate.getMonth() + 1; 
+//        int year = currentDate.getYear() + 1900; 
 //
 //        System.out.println("Ngày: " + day);
 //        System.out.println("Tháng: " + month);
