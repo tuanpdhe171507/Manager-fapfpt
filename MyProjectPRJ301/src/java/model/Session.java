@@ -52,7 +52,7 @@ public class Session {
     }
 
     public void setIsTaken(Boolean IsTaken) {
-        this.isTaken = isTaken;
+        this.isTaken = IsTaken;
     }
 
     public Group getGroup() {
