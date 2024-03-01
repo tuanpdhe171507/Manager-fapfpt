@@ -62,7 +62,7 @@ public class AttendenceSevrlet extends HttpServlet {
             throws ServletException, IOException {
         GroupStudentDBContect db = new GroupStudentDBContect();
 
-        int groupid = Integer.parseInt(request.getParameter("groupid"));
+        int groupid = Integer.parseInt(request.getParameter("sesid"));
         ArrayList<GroupStudent> list = db.listGroupStudentByID(groupid);
         request.setAttribute("listStudents", list);
 

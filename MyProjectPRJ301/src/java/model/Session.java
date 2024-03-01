@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat;
  * @author G5 5590
  */
 public class Session {
-    private int SessionID;
+    private int sessionID;
     private Date date;
-    private Boolean IsTaken;
+    private Boolean isTaken;
     private Group group;
     private Teacher teacher;
     private Room room;
@@ -21,10 +21,10 @@ public class Session {
     public Session() {
     }
 
-    public Session(int SessionID, Date date, Boolean IsTaken, Group group, Teacher teacher, Room room, TimeSlot timeslot) {
-        this.SessionID = SessionID;
+    public Session(int sessionID, Date date, Boolean isTaken, Group group, Teacher teacher, Room room, TimeSlot timeslot) {
+        this.sessionID = sessionID;
         this.date = date;
-        this.IsTaken = IsTaken;
+        this.isTaken = isTaken;
         this.group = group;
         this.teacher = teacher;
         this.room = room;
@@ -32,11 +32,11 @@ public class Session {
     }
 
     public int getSessionID() {
-        return SessionID;
+        return sessionID;
     }
 
     public void setSessionID(int SessionID) {
-        this.SessionID = SessionID;
+        this.sessionID = SessionID;
     }
 
     public Date getDate() {
@@ -48,11 +48,11 @@ public class Session {
     }
 
     public Boolean getIsTaken() {
-        return IsTaken;
+        return isTaken;
     }
 
     public void setIsTaken(Boolean IsTaken) {
-        this.IsTaken = IsTaken;
+        this.isTaken = isTaken;
     }
 
     public Group getGroup() {
@@ -95,7 +95,7 @@ public class Session {
 
     @Override
     public String toString() {
-        return "Session{" + "SessionID=" + SessionID + ", date=" + date + ", IsTaken=" + IsTaken + ", group=" + group + ", teacher=" + teacher + ", room=" + room + ", timeslot=" + timeslot + '}';
+        return "Session{" + "SessionID=" + sessionID + ", date=" + date + ", IsTaken=" + isTaken + ", group=" + group + ", teacher=" + teacher + ", room=" + room + ", timeslot=" + timeslot + '}';
     }
     
     
