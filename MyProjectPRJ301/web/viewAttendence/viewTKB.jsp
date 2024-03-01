@@ -161,9 +161,12 @@
                                             <div name="nameclass">${session.group.groupName}</div>
                                             ${session.group.subject.code}-<input class="text6" type="submit" value="view Materials"/><br/>
                                             at ${session.room.name}<br/>
+
                                             <h4 class="text8"><a href="attendence?sesid=${session.sessionID}">Take</a></h4>
-                                            <div class="text7">                                           
-                                                (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
+                                            <c:if test="${session.isPresent}">Edit</c:if>
+                                            <c:if test="${!session.isPresent}">Take</c:if>
+                                                <div class="text7">                                           
+                                                    (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
                                             </div>
                                             <c:set var="hasSession" value="true" />
                                         </c:if>
