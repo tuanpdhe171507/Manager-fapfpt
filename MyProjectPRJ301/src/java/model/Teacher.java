@@ -11,22 +11,22 @@ package model;
 public class Teacher {
 
     private int TeacherID;
-    private String Code;
-    private String FristName;
+    private String code;
+    private String fristName;
     private String lastName;
-    private String PhoneNumber;
-    private String EmailAddress;
+    private String phoneNumber;
+    private String emailAddress;
 
     public Teacher() {
     }
 
-    public Teacher(int TeacherID, String Code, String FristName, String lastName, String PhoneNumber, String EmailAddress) {
+    public Teacher(int TeacherID, String code, String fristName, String lastName, String phoneNumber, String emailAddress) {
         this.TeacherID = TeacherID;
-        this.Code = Code;
-        this.FristName = FristName;
+        this.code = code;
+        this.fristName = fristName;
         this.lastName = lastName;
-        this.PhoneNumber = PhoneNumber;
-        this.EmailAddress = EmailAddress;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
     public int getTeacherID() {
@@ -38,19 +38,19 @@ public class Teacher {
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String Code) {
-        this.Code = Code;
+        this.code = Code;
     }
 
     public String getFristName() {
-        return FristName;
+        return fristName;
     }
 
     public void setFristName(String FristName) {
-        this.FristName = FristName;
+        this.fristName = FristName;
     }
 
     public String getLastName() {
@@ -62,24 +62,24 @@ public class Teacher {
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+        this.phoneNumber = PhoneNumber;
     }
 
     public String getEmailAddress() {
-        return EmailAddress;
+        return emailAddress;
     }
 
     public void setEmailAddress(String EmailAddress) {
-        this.EmailAddress = EmailAddress;
+        this.emailAddress = EmailAddress;
     }
 
     @Override
     public String toString() {
-        return "Teacher{" + "TeacherID=" + TeacherID + ", Code=" + Code + ", FristName=" + FristName + ", lastName=" + lastName + ", PhoneNumber=" + PhoneNumber + ", EmailAddress=" + EmailAddress + '}';
+        return "Teacher{" + "TeacherID=" + TeacherID + ", Code=" + code + ", FristName=" + fristName + ", lastName=" + lastName + ", PhoneNumber=" + phoneNumber + ", EmailAddress=" + emailAddress + '}';
     }
 
 }
