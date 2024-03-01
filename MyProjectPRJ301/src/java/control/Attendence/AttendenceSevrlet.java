@@ -4,7 +4,7 @@
  */
 package control.Attendence;
 
-import dao.attendence.GroupStudentDBContect;
+import dao.attendence.AttendanceDBContext;
 import dao.timetable.SessionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,8 +63,10 @@ public class AttendenceSevrlet extends HttpServlet {
             throws ServletException, IOException {
         
         SessionDBContext sdb = new SessionDBContext();
+        
+        AttendanceDBContext adb= new AttendanceDBContext();
         int sesid = Integer.parseInt(request.getParameter("sesid"));
-        ArrayList<Attendence> list = sdb.getAttendencesByLession(sesid);
+        ArrayList<Attendence> list = adb.getAttendencesByLession(sesid);
         request.setAttribute("listStudents", list);
 
        
