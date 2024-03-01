@@ -46,27 +46,68 @@ public class StudentDBContext extends DBContext {
                 return student;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CampusDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-   
 
-   
+    public ArrayList<Student> getLitsStudentByID(int id) {
+        ArrayList<Student> lits = new ArrayList<>();
+        String sql = "Select gr.GroupID from Student as s \n"
+                + "INNER join GroupStudent as g\n"
+                + "On s.StudentID=g.StudentID \n"
+                + "Inner join [Session] as se\n"
+                + "On se.GroupID= g.GroupID\n"
+                + "Inner join [Group] as gr\n"
+                + "On gr.GroupID=se.GroupID\n"
+                + "\n"
+                + "where se.SessionID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                
+                student.setRollNumber(rs.getString("RollNumber"));
+                student.setCode(rs.getString("Code"));
+                student.setFristName(rs.getString("FirstName"));
+                student.setLastName(rs.getString("LastName"));
+                student.setImage(rs.getString("Image"));
+                student.setGender(rs.getBoolean("Gender"));
+                student.setAddress(rs.getString("Address"));
+                student.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
 
-    public static void main(String[] args) {
-        StudentDBContext c = new StudentDBContext();
-        Student subject = c.getStudentByID(9);
-        if (subject != null) {
-            System.out.println("SemeterID: " + subject.getId());
-            System.out.println("SemeterName: " + subject.getRollNumber());
-            System.out.println("StartDate: " + subject.getCode());
-            System.out.println("EndDate: " + subject.getFristName());
-            System.out.println("EndDate: " + subject.getLastName());
+                lits.add(student);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lits;
+    }
 
-        } else {
-            System.out.println("Semester not found with ID 1");
+      public static void main(String[] args) {
+        // Tạo một đối tượng StudentDBContext
+        StudentDBContext studentDBContext = new StudentDBContext();
+
+        // Thay đổi biến id thành giá trị thích hợp
+        int id = 1;
+
+        // Gọi phương thức getLitsStudentByID
+        ArrayList<Student> students = studentDBContext.getLitsStudentByID(id);
+
+        // In ra thông tin về các sinh viên
+        for (Student student : students) {
+            System.out.println("Student ID: " + student.getId());
+            System.out.println("Roll Number: " + student.getRollNumber());
+            System.out.println("Code: " + student.getCode());
+            System.out.println("First Name: " + student.getFristName());
+            System.out.println("Last Name: " + student.getLastName());
+            System.out.println("Image: " + student.getImage());
+           
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Group ID: " + student.getGroup().getGroupID());
+            System.out.println("--------------------------------------------");
         }
     }
 }
