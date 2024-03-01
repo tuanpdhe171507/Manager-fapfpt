@@ -55,9 +55,6 @@
                         <th>RECORD TIME</th>
                     </tr>
                     <c:forEach items="${requestScope.listStudents}" var="i" varStatus="loop">
-
-
-
                         <tr>
                             <td>${loop.index + 1}</td>
                             <td>${i.group.groupName}</td>
