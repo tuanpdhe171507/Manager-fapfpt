@@ -50,9 +50,9 @@ public class SessionDBContext extends DBContext {
         }
         return list;
     }
-    
+
     public Session getSessionByID(int id) {
-        
+
         String sql = "select SessionID,Date,IsTaken,GroupID,TeacherID,RoomID,TimeSlotID\n"
                 + "from [Session]"
                 + "where SessionID=? ";
@@ -77,26 +77,48 @@ public class SessionDBContext extends DBContext {
         }
         return null;
     }
- public static void main(String[] args) {
+
+   
+//    public static void main(String[] args) {
+//        // Tạo một đối tượng SessionDBContext
+//        SessionDBContext sessionDBContext = new SessionDBContext();
+//
+//        // Thay đổi biến id thành giá trị thích hợp
+////        int id = 1;
+////
+////        // Gọi phương thức getSessionByID
+////        Session session = sessionDBContext.getSessionByID(id);
+////
+////        // Kiểm tra xem session có tồn tại hay không
+////        if (session != null) {
+////            System.out.println("Session ID: " + session.getSessionID());
+////            System.out.println("Date: " + session.getDate().toString().trim());
+////            System.out.println("Is Taken: " + session.getIsTaken().toString().trim());
+////            System.out.println("Group ID: " + session.getGroup().toString().trim());
+////            System.out.println("Teacher ID: " + session.getTeacher().toString().trim());
+////
+////        } else {
+////            System.out.println("Session not found.");
+////        }
+//          
+//    }
+     public static void main(String[] args) {
         // Tạo một đối tượng SessionDBContext
         SessionDBContext sessionDBContext = new SessionDBContext();
 
-        // Thay đổi biến id thành giá trị thích hợp
-        int id = 1;
+        // Gọi phương thức getSession
+        ArrayList<Session> sessions = sessionDBContext.getSession();
 
-        // Gọi phương thức getSessionByID
-        Session session = sessionDBContext.getSessionByID(id);
-
-        // Kiểm tra xem session có tồn tại hay không
-        if (session != null) {
+        // In ra thông tin về các session
+        for (Session session : sessions) {
             System.out.println("Session ID: " + session.getSessionID());
             System.out.println("Date: " + session.getDate());
             System.out.println("Is Taken: " + session.getIsTaken());
-            System.out.println("Group ID: " + session.getGroup());
-            System.out.println("Teacher ID: " + session.getTeacher());
-            
-        } else {
-            System.out.println("Session not found.");
+            System.out.println("Group ID: " + session.getGroup().getGroupID());
+            System.out.println("Teacher ID: " + session.getTeacher().getTeacherID());
+            System.out.println("Room ID: " + session.getRoom());
+            System.out.println("Time Slot ID: " + session.getTimeslot());
+            System.out.println("--------------------------------------------");
         }
     }
 
