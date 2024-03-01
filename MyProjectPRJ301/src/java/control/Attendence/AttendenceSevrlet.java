@@ -5,6 +5,7 @@
 package control.Attendence;
 
 import dao.attendence.AttendanceDBContext;
+import dao.attendence.StudentDBContext;
 import dao.timetable.SessionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import model.Attendence;
-import model.GroupStudent;
 import model.Session;
 import model.Student;
 
@@ -62,19 +63,18 @@ public class AttendenceSevrlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         SessionDBContext sdb = new SessionDBContext();
-        
-        AttendanceDBContext adb= new AttendanceDBContext();
+
+        AttendanceDBContext adb = new AttendanceDBContext();
         int sesid = Integer.parseInt(request.getParameter("sesid"));
         ArrayList<Attendence> list = adb.getAttendencesByLession(sesid);
         request.setAttribute("listStudents", list);
 
-       
         ArrayList<Session> listSession = sdb.getSession();
+        request.setAttribute("sesid", sesid);
         request.setAttribute("listSession", listSession);
-        
-        
+
         request.getRequestDispatcher("viewAttendence/viewAttendance.jsp").forward(request, response);
     }
 
@@ -89,27 +89,51 @@ public class AttendenceSevrlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
-       
-        int seid = Integer.parseInt(request.getParameter("id"));
-        SessionDBContext db = new SessionDBContext();
-        ArrayList<Student> students = db.getStudentsByLession(seid);
+
+//        SessionDBContext sdb = new SessionDBContext();
+//       
+//
+//        String[] studentid = request.getParameterValues("id");
+//
+//        int sesid = Integer.parseInt(request.getParameter("sesionid"));
+//
+//        ArrayList<Attendence> atts = new ArrayList<>();
+//
+//        for (int i = 0; i < studentid.length; i++) {
+//            Student student = new Student();
+//            student.setId(i);
+//            Session session = new Session();
+//            Attendence attendence = new Attendence();
+//            attendence.setStudent(student);
+//            session.setSessionID(sesid);
+//            attendence.setSession(session);
+//            attendence.setComment(request.getParameter("description" + studentid[i]));
+//            attendence.setIsPresent(request.getParameter("present" + studentid[i]).equals("yes"));
+//            atts.add(attendence);
+//
+//        }
+//        sdb.takeAttendances(sesid, atts);
+        int leid = Integer.parseInt(request.getParameter("id"));
+        StudentDBContext db = new StudentDBContext();
+        ArrayList<Student> students = db.getLitsStudentByID(leid);
         ArrayList<Attendence> atts = new ArrayList<>();
-        Session session = new Session();
-        session.setSessionID(seid);
+        Session lession = new Session();
+        lession.setSessionID(leid);
         for (Student student : students) {
             Attendence a = new Attendence();
-            a.setSession(session);
+            a.setSession(lession);
             a.setStudent(student);
             a.setComment(request.getParameter("description"+student.getId()));
             a.setIsPresent(request.getParameter("present"+student.getId()).equals("yes"));
             atts.add(a);
         }
-        db.takeAttendances(seid, atts);
-        response.sendRedirect("att?id="+seid);
-     
+        db.takeAttendances(leid, atts);
+
+        AttendanceDBContext adb= new AttendanceDBContext();
+        ArrayList<Attendence> lists= adb.listAttendencesByID(leid);
+        request.setAttribute("listStudentAddtendence", lists);
         
-        request.getRequestDispatcher("viewAttendence/viewAttendance.jsp").forward(request, response);
+        request.getRequestDispatcher("viewAttendence/showSVAttendance.jsp").forward(request, response);
     }
 
     /**
