@@ -9,31 +9,31 @@ import java.sql.*;
  * @author G5 5590
  */
 public class Attendence {
-    private int AttendenceID;
+    private int attendenceID;
     private Boolean isPresent;
     private Date datetime;
-    private String Comment;
+    private String comment;
     private Session session;
     private Student student;
 
     public Attendence() {
     }
 
-    public Attendence(int AttendenceID, Boolean isPresent, Date datetime, String Comment, Session session, Student student) {
-        this.AttendenceID = AttendenceID;
+    public Attendence(int attendenceID, Boolean isPresent, Date datetime, String comment, Session session, Student student) {
+        this.attendenceID = attendenceID;
         this.isPresent = isPresent;
         this.datetime = datetime;
-        this.Comment = Comment;
+        this.comment = comment;
         this.session = session;
         this.student = student;
     }
 
     public int getAttendenceID() {
-        return AttendenceID;
+        return attendenceID;
     }
 
-    public void setAttendenceID(int AttendenceID) {
-        this.AttendenceID = AttendenceID;
+    public void setAttendenceID(int attendenceID) {
+        this.attendenceID = attendenceID;
     }
 
     public Boolean getIsPresent() {
@@ -53,11 +53,11 @@ public class Attendence {
     }
 
     public String getComment() {
-        return Comment;
+        return comment;
     }
 
-    public void setComment(String Comment) {
-        this.Comment = Comment;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Session getSession() {
@@ -75,6 +75,8 @@ public class Attendence {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+  
     
     
 }
