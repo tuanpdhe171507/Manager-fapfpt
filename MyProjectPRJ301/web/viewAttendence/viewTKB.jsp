@@ -49,7 +49,7 @@
                 font-weight: bold;
             }
             .text5{
-                background: blue;
+                background-color: rgba(0, 0, 255, 0.7);
             }
             .cod{
                 width: 250px;
@@ -162,9 +162,11 @@
                                             ${session.group.subject.code}-<input class="text6" type="submit" value="view Materials"/><br/>
                                             at ${session.room.name}<br/>
 
-                                            <h4 class="text8"><a href="attendence?sesid=${session.sessionID}">Take</a></h4>
-                                            <c:if test="${session.isPresent}">Edit</c:if>
-                                            <c:if test="${!session.isPresent}">Take</c:if>
+                                            <h4 class="text8"><a href="attendence?sesid=${session.sessionID}">
+                                                    <c:if test="${session.isTaken}">Edit</c:if>
+                                                    <c:if test="${!session.isTaken}">Take</c:if>
+                                                    </a></h4>
+                                                    
                                                 <div class="text7">                                           
                                                     (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
                                             </div>
