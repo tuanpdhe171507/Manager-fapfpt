@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-import java.sql.*;
+import java.util.Date;
 /**
  *
  * @author G5 5590
@@ -74,6 +74,11 @@ public class Attendence {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendence{" + "attendenceID=" + attendenceID + ", isPresent=" + isPresent + ", datetime=" + datetime + ", comment=" + comment + ", session=" + session + ", student=" + student + '}';
     }
 
   
