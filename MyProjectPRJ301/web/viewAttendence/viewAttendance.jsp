@@ -31,8 +31,8 @@
                 padding: 10px;
                 text-align: left;
             }
-            .row1{
-                background: blue;
+            .row1 {
+                background-color: rgba(0, 0, 255, 0.7);
             }
             .img{
                 width: 100px;
@@ -56,12 +56,19 @@
         </style>
     </head>
     <body>
-        <form action="attendence">
+        <form action="attendence" method="POST">
 
             <div class="container">
                 <h1>Take attendance</h1>
-                <h4>Attendance for AnhNN59 at slot 4 on Tuesday 20/02/2024 at room BE-101. This is session number 11 of the course.</h4>
-                 <input type="hidden" name="id" value="${param.id}" />
+                <c:choose>
+                    <c:when test="${not empty requestScope.listStudents}">
+                        <c:set var="studentAttendance" value="${requestScope.listStudents[0]}" />
+                        <h4>Attendance for  at <a>${studentAttendance.session.timeslot.name}</a> on Day ${studentAttendance.datetime} at room ${studentAttendance.session.group.groupName}. This is session number ${studentAttendance.session.sessionID} of the course.</h4>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No attendance data available.</p>
+                    </c:otherwise>
+                </c:choose>
                 <table>
                     <tr class="row1">
                         <th></th>
@@ -75,32 +82,32 @@
                         <th>SHOW IMAGE</th>
                     </tr>
 
+
+
                     <c:forEach items="${requestScope.listStudents}" var="i" varStatus="loop">
-
-
-
-                        <tr>
-                            <td>${loop.index + 1}</td>
-                            <td name="class">${i.session.group.groupName}</td>
-                            <td name="code">${i.student.rollNumber}</td>
-                            <td name="name">${i.student.lastName}${i.student.fristName}</td>
-                            <td>
-                                <input type="radio" 
-                                       ${!i.isPresent?"checked=\"checked\"":""}
-                                       name="present${i.student.id}" value="no"/> Absent
-                            </td>
-                            <td>
-                                <input type="radio" 
-                                       ${i.isPresent?"checked=\"checked\"":""}
-                                       name="present${i.student.id}" value="yes"/> Present
-                            </td>
-                            <td></td>
-                            <td>
-                                <input type="text" name="description${i.student.id}" value="${i.comment}"/>
-                            </td>
-                            <td>                            
-                                <img name="img" class="img" src="${i.student.image}" alt=""/>
-                            </td>
+                        <input type="hidden" name="id" value="${i.session.sessionID}" 
+                               <tr>
+                        <td>${loop.index + 1}</td>
+                        <td>${i.session.group.groupName}</td>
+                        <td>${i.student.rollNumber}</td>
+                        <td>${i.student.lastName}${i.student.fristName}</td>
+                        <td>
+                            <input type="radio" 
+                                   ${!i.isPresent?"checked=\"checked\"":""}
+                                   name="present${i.student.id}" value="no"/> Absent
+                        </td>
+                        <td>
+                            <input type="radio" 
+                                   ${i.isPresent?"checked=\"checked\"":""}
+                                   name="present${i.student.id}" value="yes"/> Present
+                        </td>
+                        <td></td>
+                        <td>
+                            <input type="text" name="description${i.student.id}" value="${i.comment}"/>
+                        </td>
+                        <td>                            
+                            <img name="img" class="img" src="${i.student.image}" alt=""/>
+                        </td>
                         </tr>
 
                     </c:forEach>
