@@ -61,6 +61,7 @@
             <div class="container">
                 <h1>Take attendance</h1>
                 <h4>Attendance for AnhNN59 at slot 4 on Tuesday 20/02/2024 at room BE-101. This is session number 11 of the course.</h4>
+                 <input type="hidden" name="id" value="${param.id}" />
                 <table>
                     <tr class="row1">
                         <th></th>
