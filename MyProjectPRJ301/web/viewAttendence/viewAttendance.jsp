@@ -80,28 +80,22 @@
 
                         <tr>
                             <td>${loop.index + 1}</td>
-                            <td name="class">${i.group.groupName}</td>
+                            <td name="class">${i.session.group.groupName}</td>
                             <td name="code">${i.student.rollNumber}</td>
                             <td name="name">${i.student.lastName}${i.student.fristName}</td>
-                            <td> 
-                                <input type="radio" name="attenden"
-                                       <c:if test=""> 
-                                           checked="checked"
-                                       </c:if>
-                                       value="absent"/> Absent
+                            <td>
+                                <input type="radio" 
+                                       ${!i.isPresent?"checked=\"checked\"":""}
+                                       name="present${i.student.id}" value="no"/> Absent
                             </td>
-                            <td> 
-                                <input type="radio" name="attenden"
-                                       <c:if test=""> 
-                                           checked="checked"
-                                       </c:if>
-                                       value="present"/> Present
+                            <td>
+                                <input type="radio" 
+                                       ${i.isPresent?"checked=\"checked\"":""}
+                                       name="present${i.student.id}" value="yes"/> Present
                             </td>
                             <td></td>
                             <td>
-                                <form>
-                                    <input type="text" name="name"/>
-                                </form>
+                                <input type="text" name="description${i.student.id}" value="${i.comment}"/>
                             </td>
                             <td>                            
                                 <img name="img" class="img" src="${i.student.image}" alt=""/>
