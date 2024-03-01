@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Attendence;
 import model.GroupStudent;
 import model.Session;
 
@@ -60,13 +61,13 @@ public class AttendenceSevrlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GroupStudentDBContect db = new GroupStudentDBContect();
-
-        int groupid = Integer.parseInt(request.getParameter("sesid"));
-        ArrayList<GroupStudent> list = db.listGroupStudentByID(groupid);
+        
+        SessionDBContext sdb = new SessionDBContext();
+        int sesid = Integer.parseInt(request.getParameter("sesid"));
+        ArrayList<Attendence> list = sdb.getAttendencesByLession(sesid);
         request.setAttribute("listStudents", list);
 
-        SessionDBContext sdb = new SessionDBContext();
+       
         ArrayList<Session> listSession = sdb.getSession();
         request.setAttribute("listSession", listSession);
         
