@@ -29,7 +29,6 @@ import model.Student;
  */
 public class AttendanceDBContext extends DBContext {
 
-   
     public ArrayList<GroupStudent> listGroupStudentByID(int groupID) {
         ArrayList<GroupStudent> lists = new ArrayList();
         String sql = "Select GroupStudentID,GroupID,StudentID from GroupStudent\n"
@@ -45,6 +44,31 @@ public class AttendanceDBContext extends DBContext {
                 student.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
                 student.setStudent(new StudentDBContext().getStudentByID(rs.getInt("StudentID")));
                 lists.add(student);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lists;
+    }
+
+    public ArrayList<Attendence> listAttendencesByID(int seid) {
+        ArrayList<Attendence> lists = new ArrayList();
+        String sql = "Select AttendenceID,isPresent,RecordTime,Comment,SessionID,StudentID from Attendence \n"
+                + "where SessionID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, seid);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Attendence attendence = new Attendence();
+
+                attendence.setAttendenceID(rs.getInt("AttendenceID"));
+                attendence.setIsPresent(rs.getBoolean("isPresent"));
+                attendence.setDatetime(rs.getTimestamp("RecordTime"));
+                attendence.setComment(rs.getString("Comment"));
+                attendence.setSession(new SessionDBContext().getSessionByID(rs.getInt("SessionID")));
+                attendence.setStudent(new StudentDBContext().getStudentByID(rs.getInt("StudentID")));
+                lists.add(attendence);
             }
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,11 +101,6 @@ public class AttendanceDBContext extends DBContext {
                 a.setComment(rs.getString("Comment"));
                 a.setDatetime(rs.getTimestamp("RecordTime"));
 
-//                if (a.getAttendenceID()!= 0) {
-////                    a.setDescription(rs.getString("description"));
-////                    a.setPresent(rs.getBoolean("isPresent"));
-////                    a.setTime(rs.getTimestamp("capturedtime"));
-//                }
                 atts.add(a);
             }
 
@@ -95,14 +114,14 @@ public class AttendanceDBContext extends DBContext {
 
         AttendanceDBContext db = new AttendanceDBContext();
 
-        ArrayList<Attendence> attendences = db.getAttendencesByLession(6);
+        ArrayList<Attendence> attendences = db.listAttendencesByID(1);
 
         // In ra thông tin về các điểm danh
         for (Attendence attendance : attendences) {
             System.out.println("Student ID: " + attendance.getAttendenceID());
             System.out.println("Group Name: " + attendance.getSession());
             System.out.println("Roll Number: " + attendance.getStudent());
-           
+
             System.out.println("--------------------------------------------");
         }
     }
