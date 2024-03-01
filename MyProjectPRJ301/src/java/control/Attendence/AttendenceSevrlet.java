@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import model.Attendence;
 import model.GroupStudent;
 import model.Session;
+import model.Student;
 
 /**
  *
@@ -89,7 +90,23 @@ public class AttendenceSevrlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
  
-
+       
+        int seid = Integer.parseInt(request.getParameter("id"));
+        SessionDBContext db = new SessionDBContext();
+        ArrayList<Student> students = db.getStudentsByLession(seid);
+        ArrayList<Attendence> atts = new ArrayList<>();
+        Session session = new Session();
+        session.setSessionID(seid);
+        for (Student student : students) {
+            Attendence a = new Attendence();
+            a.setSession(session);
+            a.setStudent(student);
+            a.setComment(request.getParameter("description"+student.getId()));
+            a.setIsPresent(request.getParameter("present"+student.getId()).equals("yes"));
+            atts.add(a);
+        }
+        db.takeAttendances(seid, atts);
+        response.sendRedirect("att?id="+seid);
      
         
         request.getRequestDispatcher("viewAttendence/viewAttendance.jsp").forward(request, response);
