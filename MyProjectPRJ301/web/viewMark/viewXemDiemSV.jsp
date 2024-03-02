@@ -93,7 +93,47 @@
                 text-align: left;
             }
             .text4{
-                width: 200px;
+                width: 250px;
+            }
+
+            .tam1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0, 0, 255, 0.7);
+            }
+
+            .text6 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .dd {
+                margin-right: 20px;
+                width: 250px;
+                margin-left: -195px;
+            }
+            .container9 {
+
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #000;
+                padding: 20px;
+                box-shadow: 5px 5px 2px -2px rgb(200, 199, 199),
+                    -5px -5px 2px -2px rgb(200, 199, 199),
+                    5px -5px 2px -2px rgb(200, 199, 199),
+                    -5px 5px 2px -2px rgb(200, 199, 199);
+            }
+            .additional-line {
+                width: 100%;
+                height: 1px;
+               background-color: rgba(0, 0, 0, 0.3);
+                margin-top: -40px;
+                
+            }
+            .text5{
+                margin-top: -180px;
             }
         </style>
     </head>
@@ -116,21 +156,39 @@
 
                 <div class="text2">Grade report for Phan Đình Tuấn (HE171507)</div>
                 <div class="text3">Select a term, course ...</div>
+                <div class="container9">
+                    <div class="tam1">
+                        <table>
+                            <tr>
+                                <th class="text4">TERM</th>
+                                <th>COURSE</th>
+                            </tr>
 
-                <table>
-                    <tr class="row1">
-                        <th class="text4">TERM</th>
-                        <th>COURSE</th>
-                    </tr>
 
-                    <c:forEach items="${requestScope.se}" var="i">
-                        <tr>
-                            <td> ${i.semeterName}</td>  
-                        </tr>
-                         
-                    </c:forEach>
-
-                </table>
+                        </table>
+                    </div>
+                    <div class="text6">
+                        <div class="dd">
+                            <table> 
+                                <c:forEach items="${requestScope.se}" var="i">
+                                    <tr>
+                                        <td>${i.semeterName}</td> 
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <div class="text5">
+                            <div><a href="#"> .Internet vạn vật (IOT102)</a>(SE1817, from 03/01/2024 - 02/02/2024)</div><br/><br/>
+                             <div class="additional-line"></div>
+                            <div><a href="#"> .Elementary Japanese 1-A1.2 (JPD123)</a>(SE1817, from 02/01/2024 - 21/03/2024)</div><br/><br/>
+                             <div class="additional-line"></div>
+                            <div><a href="#"> .Statistics and Probability (MAS291)</a>(SE1817, from 02/01/2024 - 21/03/2024)</div><br/><br/>
+                             <div class="additional-line"></div>
+                            <div><a href="#"> .Java Web Application Development (PRJ301)</a>(SE1817, from 03/01/2024 - 22/03/2024)</div><br/><br/>
+                             <div class="additional-line"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
 
