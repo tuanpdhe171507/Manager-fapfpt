@@ -11,19 +11,19 @@ package model;
 public class Assessment {
     private int AssessmentID;
     private String SubjectCode;
-    private int Weight;
+    private float Weight;
     private String Name;
     private int Part;
     private String CompletionCriteria;
     private String Duration;
     private String knowlegeAndSkill;
     private String Note;
-    private Categoy categoy;
+    private Category categoy;
 
     public Assessment() {
     }
 
-    public Assessment(int AssessmentID, String SubjectCode, int Weight, String Name, int Part, String CompletionCriteria, String Duration, String knowlegeAndSkill, String Note, Categoy categoy) {
+    public Assessment(int AssessmentID, String SubjectCode, int Weight, String Name, int Part, String CompletionCriteria, String Duration, String knowlegeAndSkill, String Note, Category categoy) {
         this.AssessmentID = AssessmentID;
         this.SubjectCode = SubjectCode;
         this.Weight = Weight;
@@ -52,11 +52,11 @@ public class Assessment {
         this.SubjectCode = SubjectCode;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return Weight;
     }
 
-    public void setWeight(int Weight) {
+    public void setWeight(float Weight) {
         this.Weight = Weight;
     }
 
@@ -108,12 +108,17 @@ public class Assessment {
         this.Note = Note;
     }
 
-    public Categoy getCategoy() {
+    public Category getCategoy() {
         return categoy;
     }
 
-    public void setCategoy(Categoy categoy) {
+    public void setCategoy(Category categoy) {
         this.categoy = categoy;
+    }
+
+    @Override
+    public String toString() {
+        return "Assessment{" + "AssessmentID=" + AssessmentID + ", SubjectCode=" + SubjectCode + ", Weight=" + Weight + ", Name=" + Name + ", Part=" + Part + ", CompletionCriteria=" + CompletionCriteria + ", Duration=" + Duration + ", knowlegeAndSkill=" + knowlegeAndSkill + ", Note=" + Note + ", categoy=" + categoy + '}';
     }
     
     
