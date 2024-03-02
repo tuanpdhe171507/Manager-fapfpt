@@ -5,8 +5,6 @@
 package dao;
 
 import dao.timetable.GroupDBContext;
-import dao.timetable.SubjectDBContext;
-import dao.timetable.TeacherDBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Group;
 import model.WeekTimeTable;
 
 /**
@@ -72,9 +69,9 @@ public class WeekTimeTableDBContext extends DBContext {
     }
 
     public WeekTimeTable getDayAndMonth() {
-
-        String sql = "SELECT WeekTimeTableID,StartDate, EndDate FROM WeekTimeTable\n"
-                + "WHERE GETDATE() between StartDate And EndDate";
+        String sql = "SELECT WeekTimeTableID, StartDate, EndDate\n"
+                + "FROM WeekTimeTable\n"
+                + "WHERE CONVERT(DATE, GETDATE()) BETWEEN StartDate AND EndDate";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -103,7 +100,7 @@ public class WeekTimeTableDBContext extends DBContext {
                 weekTimeTable.setWeekTimeTableID(rs.getInt("WeekTimeTableID"));
                 weekTimeTable.setStartDate(rs.getDate("StartDate"));
                 weekTimeTable.setEndDate(rs.getDate("EndDate"));
-              
+
                 return weekTimeTable;
             }
         } catch (SQLException ex) {
@@ -121,18 +118,18 @@ public class WeekTimeTableDBContext extends DBContext {
 //        }
 
         WeekTimeTableDBContext c = new WeekTimeTableDBContext();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
-        try {
-            Date startDate = Date.valueOf("2024-01-01");
-            Date endDate = Date.valueOf("2024-01-07");
-            List<Date> daysInWeek = c.getListDaysInWeek(startDate, endDate);
-            for (Date date : daysInWeek) {
-                System.out.println(dateFormat.format(date));
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid date format.");
-        }
-       // System.out.println(c.getDayAndMonth().getStartDate());
+//        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+//        try {
+//            Date startDate = Date.valueOf("2024-01-01");
+//            Date endDate = Date.valueOf("2024-01-07");
+//            List<Date> daysInWeek = c.getListDaysInWeek(startDate, endDate);
+//            for (Date date : daysInWeek) {
+//                System.out.println(dateFormat.format(date));
+//            }
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("Invalid date format.");
+//        }
+        System.out.println(c.getDayAndMonth().getStartDate());
 //        Date currentDate = new Date();
 //
 //        int day = currentDate.getDate();
