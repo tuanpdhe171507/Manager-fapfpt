@@ -72,6 +72,7 @@
                         <th>COMMENT</th>
                         <th>TEACHER</th>
                         <th>RECORD TIME</th>
+                        <th>View Mark</th>
                     </tr>
                     <c:forEach items="${requestScope.listStudentAddtendence}" var="i" varStatus="loop">
                         <tr>
@@ -94,7 +95,7 @@
                             </td>
                             <td>${i.session.teacher.code}</td>
                             <td>${i.datetime}</td>
-
+                            <td><a href="mark?sesid=${i.session.sessionID}">Mark</a></td>
                         </tr>
 
                     </c:forEach>
