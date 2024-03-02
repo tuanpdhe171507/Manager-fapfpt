@@ -9,51 +9,78 @@ package model;
  * @author G5 5590
  */
 public class Grade {
-    private int GradeID;
-    private float Mark;
-    private Assessment assement;
-    private Result result;
+    private int id;
+    private String coment;
+    private float score;
+    private Subject subjectID;
+    private Assessment assessmentID;
+    private Student studentID;
 
     public Grade() {
     }
 
-    public Grade(int GradeID, float Mark, Assessment assement, Result result) {
-        this.GradeID = GradeID;
-        this.Mark = Mark;
-        this.assement = assement;
-        this.result = result;
+    public Grade(int id, String coment, float score, Subject subjectID, Assessment assessmentID, Student studentID) {
+        this.id = id;
+        this.coment = coment;
+        this.score = score;
+        this.subjectID = subjectID;
+        this.assessmentID = assessmentID;
+        this.studentID = studentID;
     }
 
-    public int getGradeID() {
-        return GradeID;
+    public int getId() {
+        return id;
     }
 
-    public void setGradeID(int GradeID) {
-        this.GradeID = GradeID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public float getMark() {
-        return Mark;
+    public String getComent() {
+        return coment;
     }
 
-    public void setMark(float Mark) {
-        this.Mark = Mark;
+    public void setComent(String coment) {
+        this.coment = coment;
     }
 
-    public Assessment getAssement() {
-        return assement;
+    public float getScore() {
+        return score;
     }
 
-    public void setAssement(Assessment assement) {
-        this.assement = assement;
+    public void setScore(float score) {
+        this.score = score;
     }
 
-    public Result getResult() {
-        return result;
+    public Subject getSubjectID() {
+        return subjectID;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setSubjectID(Subject subjectID) {
+        this.subjectID = subjectID;
     }
+
+    public Assessment getAssessmentID() {
+        return assessmentID;
+    }
+
+    public void setAssessmentID(Assessment assessmentID) {
+        this.assessmentID = assessmentID;
+    }
+
+    public Student getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(Student studentID) {
+        this.studentID = studentID;
+    }
+
+    @Override
+    public String toString() {
+        return "Grade{" + "id=" + id + ", coment=" + coment + ", score=" + score + ", subjectID=" + subjectID + ", assessmentID=" + assessmentID + ", studentID=" + studentID + '}';
+    }
+    
+
     
 }
