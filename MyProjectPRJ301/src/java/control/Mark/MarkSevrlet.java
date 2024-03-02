@@ -4,6 +4,7 @@
  */
 package control.Mark;
 
+import dao.mark.GradeDBContext;
 import dao.timetable.SemeterDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Grade;
 import model.Semeter;
 
 /**
@@ -58,15 +60,15 @@ public class MarkSevrlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-//        int leid = Integer.parseInt(request.getParameter("id"));
-//        AttendanceDBContext adb = new AttendanceDBContext();
-//        ArrayList<Attendence> lists = adb.listAttendencesByID(leid);
-//        request.setAttribute("listStudentAddtendence", lists);
-     
+      
         SemeterDBContext db= new SemeterDBContext();
         ArrayList<Semeter> lists=db.getSemetersByName();
         request.setAttribute("se", lists);
+        
+        int studentid= Integer.parseInt(request.getParameter("studentid"));
+        GradeDBContext gdb= new GradeDBContext();
+        ArrayList<Grade> listGrades = gdb.listGrade(studentid);
+        request.setAttribute("listGrade", listGrades);
          
         request.getRequestDispatcher("viewMark/viewXemDiemSV.jsp").forward(request, response);
     }
