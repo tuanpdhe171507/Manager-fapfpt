@@ -33,10 +33,6 @@ public class WeekTimeTable {
     public void setWeekTimeTableID(int WeekTimeTableID) {
         this.weekTimeTableID = WeekTimeTableID;
     }
-
-  
-
-
     public Date getStartDate() {
         return StartDate;
     }
@@ -71,5 +67,11 @@ public class WeekTimeTable {
         String endDayAndMonth = dateFormat.format(this.EndDate);
         return endDayAndMonth;
     }
+
+    @Override
+    public String toString() {
+        return "WeekTimeTable{" + "weekTimeTableID=" + weekTimeTableID + ", StartDate=" + StartDate + ", EndDate=" + EndDate + '}';
+    }
+    
 
 }
