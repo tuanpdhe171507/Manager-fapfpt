@@ -16,6 +16,10 @@
         <servlet-name>AttendenceSevrlet</servlet-name>
         <servlet-class>control.Attendence.AttendenceSevrlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MarkSevrlet</servlet-name>
+        <servlet-class>control.Mark.MarkSevrlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/fapfpt</url-pattern>
@@ -31,5 +35,9 @@
     <servlet-mapping>
         <servlet-name>AttendenceSevrlet</servlet-name>
         <url-pattern>/attendence</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarkSevrlet</servlet-name>
+        <url-pattern>/mark</url-pattern>
     </servlet-mapping>
 </web-app>
