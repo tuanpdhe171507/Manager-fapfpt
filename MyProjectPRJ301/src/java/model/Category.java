@@ -8,17 +8,17 @@ package model;
  *
  * @author G5 5590
  */
-public class Categoy {
+public class Category {
     private int CategoryID;
     private String CategoryName;
     private String Type;
     private String QuestionType;
     private String GradingGuide;
 
-    public Categoy() {
+    public Category() {
     }
 
-    public Categoy(int CategoryID, String CategoryName, String Type, String QuestionType, String GradingGuide) {
+    public Category(int CategoryID, String CategoryName, String Type, String QuestionType, String GradingGuide) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
         this.Type = Type;
@@ -65,6 +65,12 @@ public class Categoy {
     public void setGradingGuide(String GradingGuide) {
         this.GradingGuide = GradingGuide;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" + "CategoryID=" + CategoryID + ", CategoryName=" + CategoryName + ", Type=" + Type + ", QuestionType=" + QuestionType + ", GradingGuide=" + GradingGuide + '}';
+    }
+
     
     
 }
