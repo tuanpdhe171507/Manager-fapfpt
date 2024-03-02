@@ -85,9 +85,7 @@
                 border-radius: 5px;
                 margin-top: -35px;
             }
-            .text3{
-                display: flex;
-            }
+            
         </style>
     </head>
     <body>
@@ -126,8 +124,12 @@
                         </div>
                         <div><h5>Information Access(Tra cứu thông tin)</h5></div>
                         <div class="text3">
-                            <h7><a href="timetable">Weekly Timetable</a></h7> <h7>(Thời khóa biểu từng tuần)</h7>
-                            <h7><a href="">Academic Transcript</a></h7> <h7>(Academic Transcript)</h7>
+                            <div>
+                            <h7><a href="timetable">Weekly Timetable</a></h7><h7>(Thời khóa biểu từng tuần)</h7>
+                             </div>
+                            <div>
+                                <h7><a href="">Academic Transcript</a></h7><h7>(Academic Transcript)</h7>
+                            </div>
                         </div>
                     </div>
                 </div>
