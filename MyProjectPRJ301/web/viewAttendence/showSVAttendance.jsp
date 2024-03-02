@@ -95,7 +95,7 @@
                             </td>
                             <td>${i.session.teacher.code}</td>
                             <td>${i.datetime}</td>
-                            <td><a href="mark?sesid=${i.session.sessionID}">Mark</a></td>
+                            <td><a href="mark?studentid=${i.student.id}">Mark</a></td>
                         </tr>
 
                     </c:forEach>
