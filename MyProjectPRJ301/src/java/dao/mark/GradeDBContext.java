@@ -5,7 +5,6 @@
 package dao.mark;
 
 import dao.DBContext;
-import dao.attendence.StudentDBContext;
 import dao.timetable.SubjectDBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Assessment;
 import model.Grade;
-
 
 /**
  *
@@ -22,23 +21,31 @@ import model.Grade;
  */
 public class GradeDBContext extends DBContext {
 
-    public ArrayList<Grade> listGrade(int studentID) {
+    public ArrayList<Grade> listGrade(int studentID, int subjectID) {
         ArrayList<Grade> lists = new ArrayList();
-        String sql = "select a.GradeID,a.Comment,a.Score,a.AssesmentID,a.SubjectID,a.StudentID from Grade as a\n"
-                + "where a.StudentID=?";
+        String sql = "select sj.SubjectID,a.name,g.weight,c.value from Score as c\n"
+                + "inner join Grade as g\n"
+                + "On c.assessmentId=g.assessmentId and c.subjectId=g.subjectCode\n"
+                + "inner join Assessment as a\n"
+                + "On a.aid=c.assessmentId\n"
+                + "inner join Subject as sj\n"
+                + "On sj.SubjectID= c.subjectId\n"
+                + "where c.studentId=? and sj.SubjectID=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, studentID);
+            st.setInt(2, subjectID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Grade grade = new Grade();
-
-                grade.setId(rs.getInt("GradeID"));
-                grade.setComent(rs.getString("Comment"));
-                grade.setScore(rs.getFloat("Score"));
-                grade.setAssessmentID(new AssessmentDBContext().listAssessment(rs.getInt("AssesmentID")));
-                grade.setSubjectID(new SubjectDBContext().getByIDSubject(rs.getInt("SubjectID")));
-                grade.setStudentID(new StudentDBContext().getStudentByID(rs.getInt("StudentID")));
+                                             
+                Assessment ass= new Assessment();
+                grade.setSubjectid(new SubjectDBContext().getByIDSubject(rs.getInt("SubjectID")));
+                ass.setName(rs.getString("name"));
+                grade.setAssessmentName(rs.getString("name"));
+                grade.setWeight(rs.getFloat("weight"));
+                grade.setValueScore(rs.getFloat("value"));
+                
                 lists.add(grade);
             }
         } catch (SQLException ex) {
@@ -46,27 +53,27 @@ public class GradeDBContext extends DBContext {
         }
         return lists;
     }
+
+    public static void main(String[] args) {
+    GradeDBContext dbContext = new GradeDBContext();
+    int studentIDToSearch = 1; 
+    int subjectIDToSearch = 24;
     
-      public static void main(String[] args) {
-       
-        GradeDBContext studentDBContext = new GradeDBContext();
-
+ 
+    ArrayList<Grade> grades = dbContext.listGrade(studentIDToSearch, subjectIDToSearch);
     
-        int studentIDToCheck = 1;
-
-     
-        ArrayList<Grade> grades = studentDBContext.listGrade(studentIDToCheck);
-
-       
+    if (!grades.isEmpty()) {
+      
+        System.out.println("Grades for Student ID " + studentIDToSearch + " in Subject ID " + subjectIDToSearch + ":");
         for (Grade grade : grades) {
-            System.out.println("Grade ID: " + grade.getId());
-            System.out.println("Comment: " + grade.getComent());
-            System.out.println("Score: " + grade.getScore());
-            System.out.println("Assessment: " + grade.getAssessmentID().getName()); // In ra tên của bài đánh giá
-            System.out.println("Subject: " + grade.getSubjectID()); // In ra tên của môn học
-            System.out.println("Student: " + grade.getStudentID()); // In ra tên của sinh viên
-            System.out.println("----------------------------------");
+         
+            System.out.println("Value: " + grade.getValueScore());
+          
         }
+    } else {
+     
+        System.out.println("No grades found for Student ID " + studentIDToSearch + " in Subject ID " + subjectIDToSearch);
     }
+}
 
 }
