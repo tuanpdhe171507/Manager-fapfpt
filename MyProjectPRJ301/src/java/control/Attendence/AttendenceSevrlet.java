@@ -89,29 +89,7 @@ public class AttendenceSevrlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        SessionDBContext sdb = new SessionDBContext();
-//       
-//
-//        String[] studentid = request.getParameterValues("id");
-//
-//        int sesid = Integer.parseInt(request.getParameter("sesionid"));
-//
-//        ArrayList<Attendence> atts = new ArrayList<>();
-//
-//        for (int i = 0; i < studentid.length; i++) {
-//            Student student = new Student();
-//            student.setId(i);
-//            Session session = new Session();
-//            Attendence attendence = new Attendence();
-//            attendence.setStudent(student);
-//            session.setSessionID(sesid);
-//            attendence.setSession(session);
-//            attendence.setComment(request.getParameter("description" + studentid[i]));
-//            attendence.setIsPresent(request.getParameter("present" + studentid[i]).equals("yes"));
-//            atts.add(attendence);
-//
-//        }
-//        sdb.takeAttendances(sesid, atts);
+
         int leid = Integer.parseInt(request.getParameter("id"));
         StudentDBContext db = new StudentDBContext();
         ArrayList<Student> students = db.getLitsStudentByID(leid);
