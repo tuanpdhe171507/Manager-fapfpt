@@ -128,9 +128,9 @@
             .additional-line {
                 width: 100%;
                 height: 1px;
-               background-color: rgba(0, 0, 0, 0.3);
+                background-color: rgba(0, 0, 0, 0.3);
                 margin-top: -40px;
-                
+
             }
             .text5{
                 margin-top: -180px;
@@ -178,18 +178,30 @@
                             </table>
                         </div>
                         <div class="text5">
-                            <div><a href="#"> .Internet vạn vật (IOT102)</a>(SE1817, from 03/01/2024 - 02/02/2024)</div><br/><br/>
-                             <div class="additional-line"></div>
-                            <div><a href="#"> .Elementary Japanese 1-A1.2 (JPD123)</a>(SE1817, from 02/01/2024 - 21/03/2024)</div><br/><br/>
-                             <div class="additional-line"></div>
-                            <div><a href="#"> .Statistics and Probability (MAS291)</a>(SE1817, from 02/01/2024 - 21/03/2024)</div><br/><br/>
-                             <div class="additional-line"></div>
-                            <div><a href="#"> .Java Web Application Development (PRJ301)</a>(SE1817, from 03/01/2024 - 22/03/2024)</div><br/><br/>
-                             <div class="additional-line"></div>
+
+
+                            <div>
+                                <a href="viewmark?studentid=${requestScope.studentid}&subjectid1=24">.Internet vạn vật (IOT102)</a>(SE1817, from 03/01/2024 - 02/02/2024)
+                            </div><br/><br/>
+                            <div class="additional-line"></div>
+                            <div>
+                                <a href="viewmark?studentid=${requestScope.studentid}&subjectid1=23">.Elementary Japanese 1-A1.2 (JPD123)</a>(SE1817, from 02/01/2024 - 21/03/2024)
+                            </div><br/><br/>
+                            <div class="additional-line"></div>
+                            <div>
+                                <a href="viewmark?studentid=${requestScope.studentid}&subjectid1=22">.Statistics and Probability (MAS291)</a>(SE1817, from 02/01/2024 - 21/03/2024)
+                            </div><br/><br/>
+                            <div class="additional-line"></div>
+                            <div>
+                                <a href="viewmark?studentid=${requestScope.studentid}&subjectid1=25">.Java Web Application Development (PRJ301)</a>(SE1817, from 03/01/2024 - 22/03/2024)
+                            </div><br/><br/>
+                            <div class="additional-line"></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            
         </form>
 
     </body>
