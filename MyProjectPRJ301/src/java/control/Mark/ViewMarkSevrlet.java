@@ -5,8 +5,8 @@
 package control.Mark;
 
 import dao.mark.GradeDBContext;
-import dao.timetable.SemeterDBContext;
 import dao.timetable.SubjectDBContext;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,14 +15,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Grade;
-import model.Semeter;
 import model.Subject;
 
 /**
  *
  * @author G5 5590
  */
-public class MarkSevrlet extends HttpServlet {
+public class ViewMarkSevrlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +40,10 @@ public class MarkSevrlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MarkSevrlet</title>");
+            out.println("<title>Servlet ViewMarkSevrlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet MarkSevrlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewMarkSevrlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,18 +61,23 @@ public class MarkSevrlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        SemeterDBContext db = new SemeterDBContext();
-        ArrayList<Semeter> lists = db.getSemetersByName();
-        request.setAttribute("se", lists);
+        
+        int subjectid = Integer.parseInt(request.getParameter("subjectid1"));
+        
+        SubjectDBContext subjectDBContext = new SubjectDBContext();
+        ArrayList<Subject> sub = subjectDBContext.getlistSubject(subjectid);
+        request.setAttribute("si", sub);
+     
 
         int studentid = Integer.parseInt(request.getParameter("studentid"));
+        request.setAttribute("subjectid", subjectid);
         request.setAttribute("studentid", studentid);
-        
-        
-    
-        
-        request.getRequestDispatcher("viewMark/viewXemDiemSV.jsp").forward(request, response);
+
+        GradeDBContext gdb = new GradeDBContext();
+        ArrayList<Grade> listGrades = gdb.listGrade(studentid, subjectid);
+        request.setAttribute("listGrade", listGrades);
+
+        request.getRequestDispatcher("viewMark/viewDiemCuaMoiMon.jsp").forward(request, response);
     }
 
     /**
@@ -87,8 +91,7 @@ public class MarkSevrlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-       
+
     }
 
     /**
@@ -102,12 +105,3 @@ public class MarkSevrlet extends HttpServlet {
     }// </editor-fold>
 
 }
-//<div>
-//                    <table class="bang3">
-//                        <c:forEach items="${requestScope.listGrade}" var="i">
-//                            <tr class="text5">
-//                                <td>${i.valueScore}</td>
-//                            </tr>
-//                        </c:forEach>
-//                    </table>
-//                </div>
