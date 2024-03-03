@@ -9,78 +9,81 @@ package model;
  * @author G5 5590
  */
 public class Grade {
-    private int id;
-    private String coment;
-    private float score;
-    private Subject subjectID;
-    private Assessment assessmentID;
-    private Student studentID;
+    private Assessment asid;
+    private Subject Subjectid;
+    private int quantity;
+    private float weight;
+    private String assessmentName;
+    private float valueScore;
 
     public Grade() {
     }
 
-    public Grade(int id, String coment, float score, Subject subjectID, Assessment assessmentID, Student studentID) {
-        this.id = id;
-        this.coment = coment;
-        this.score = score;
-        this.subjectID = subjectID;
-        this.assessmentID = assessmentID;
-        this.studentID = studentID;
+    public Grade(Assessment asid, Subject Subjectid, int quantity, float weight, String assessmentName, float valueScore) {
+        this.asid = asid;
+        this.Subjectid = Subjectid;
+        this.quantity = quantity;
+        this.weight = weight;
+        this.assessmentName = assessmentName;
+        this.valueScore = valueScore;
     }
 
-    public int getId() {
-        return id;
+    public Assessment getAsid() {
+        return asid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAsid(Assessment asid) {
+        this.asid = asid;
     }
 
-    public String getComent() {
-        return coment;
+    public Subject getSubjectid() {
+        return Subjectid;
     }
 
-    public void setComent(String coment) {
-        this.coment = coment;
+    public void setSubjectid(Subject Subjectid) {
+        this.Subjectid = Subjectid;
     }
 
-    public float getScore() {
-        return score;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setScore(float score) {
-        this.score = score;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public Subject getSubjectID() {
-        return subjectID;
+    public float getWeight() {
+        return weight;
     }
 
-    public void setSubjectID(Subject subjectID) {
-        this.subjectID = subjectID;
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
-    public Assessment getAssessmentID() {
-        return assessmentID;
+    public String getAssessmentName() {
+        return assessmentName;
     }
 
-    public void setAssessmentID(Assessment assessmentID) {
-        this.assessmentID = assessmentID;
+    public void setAssessmentName(String assessmentName) {
+        this.assessmentName = assessmentName;
     }
 
-    public Student getStudentID() {
-        return studentID;
+    public float getValueScore() {
+        return valueScore;
     }
 
-    public void setStudentID(Student studentID) {
-        this.studentID = studentID;
+    public void setValueScore(float valueScore) {
+        this.valueScore = valueScore;
     }
 
     @Override
     public String toString() {
-        return "Grade{" + "id=" + id + ", coment=" + coment + ", score=" + score + ", subjectID=" + subjectID + ", assessmentID=" + assessmentID + ", studentID=" + studentID + '}';
+        return "Grade{" + "asid=" + asid + ", Subjectid=" + Subjectid + ", quantity=" + quantity + ", weight=" + weight + ", assessmentName=" + assessmentName + ", valueScore=" + valueScore + '}';
     }
+
+   
     
+  
 
     
 }
