@@ -9,11 +9,14 @@ import dao.timetable.SubjectDBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Assessment;
 import model.Grade;
+import model.Semeter;
+import model.Subject;
 
 /**
  *
@@ -38,14 +41,14 @@ public class GradeDBContext extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Grade grade = new Grade();
-                                             
-                Assessment ass= new Assessment();
+
+                Assessment ass = new Assessment();
                 grade.setSubjectid(new SubjectDBContext().getByIDSubject(rs.getInt("SubjectID")));
                 ass.setName(rs.getString("name"));
                 grade.setAssessmentName(rs.getString("name"));
                 grade.setWeight(rs.getFloat("weight"));
                 grade.setValueScore(rs.getFloat("value"));
-                
+
                 lists.add(grade);
             }
         } catch (SQLException ex) {
@@ -54,26 +57,52 @@ public class GradeDBContext extends DBContext {
         return lists;
     }
 
-    public static void main(String[] args) {
-    GradeDBContext dbContext = new GradeDBContext();
-    int studentIDToSearch = 1; 
-    int subjectIDToSearch = 24;
-    
- 
-    ArrayList<Grade> grades = dbContext.listGrade(studentIDToSearch, subjectIDToSearch);
-    
-    if (!grades.isEmpty()) {
-      
-        System.out.println("Grades for Student ID " + studentIDToSearch + " in Subject ID " + subjectIDToSearch + ":");
+    public float calculateAverage(ArrayList<Grade> grades) {
+        float totalWeightedScore = 0;
+
+        boolean hasFinalExamResit = false; // Biến để kiểm tra xem có Final Exam Resit hay không
+        float finalExamResitValue = 0; // Biến để lưu giá trị của Final Exam Resit
+
         for (Grade grade : grades) {
-         
-            System.out.println("Value: " + grade.getValueScore());
-          
+            String assessmentName = grade.getAssessmentName();
+            float weight = grade.getWeight();
+            float value = grade.getValueScore();
+
+            // Nếu assessmentName là "Final Exam Resit" và value lớn hơn 0
+            if (assessmentName.equalsIgnoreCase("Final Exam Resit") && value > 0) {
+                hasFinalExamResit = true;
+                finalExamResitValue = value;
+            } else if (assessmentName.equalsIgnoreCase("Final Exam") && value > 0 && finalExamResitValue < 0) {
+                // Nếu có cả "Final Exam" và "Final Exam Resit" và value của Final Exam Resit < 0
+                totalWeightedScore += weight * value;
+            } else if (assessmentName.equalsIgnoreCase("Final Exam") && hasFinalExamResit && finalExamResitValue > 0) {
+                // Nếu có cả "Final Exam" và "Final Exam Resit" và value của Final Exam Resit > 0
+                totalWeightedScore += weight * finalExamResitValue;
+            } else {
+                // Sử dụng điểm của assessmentName khác hoặc điểm là 0 để tính tổng điểm trọng số
+                totalWeightedScore += weight * value;
+            }
         }
-    } else {
-     
-        System.out.println("No grades found for Student ID " + studentIDToSearch + " in Subject ID " + subjectIDToSearch);
+        // Làm tròn kết quả đến 2 chữ số sau dấu phẩy
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String roundedScore = decimalFormat.format(totalWeightedScore);
+        totalWeightedScore = Float.parseFloat(roundedScore);
+
+        return totalWeightedScore;
     }
-}
+
+    public static void main(String[] args) {
+        // Tạo một đối tượng GradeDBContext
+        GradeDBContext dbContext = new GradeDBContext();
+
+        // Lấy danh sách các điểm của học sinh có ID là 1 cho môn học có ID là 23
+        ArrayList<Grade> grades = dbContext.listGrade(1, 24);
+
+        // Tính điểm trung bình từ danh sách điểm
+        float averageScore = dbContext.calculateAverage(grades);
+
+        // In ra kết quả
+        System.out.println("Average Score: " + averageScore);
+    }
 
 }
