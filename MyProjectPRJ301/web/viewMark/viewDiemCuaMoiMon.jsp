@@ -57,7 +57,7 @@
             .bang{
                 margin-top: 30px;
                 margin-left: 122px;
-               width: 1225px;
+                width: 1225px;
             }
             .row2{
                 height: 50px;
@@ -91,18 +91,48 @@
                 width: 300px;
             }
             .text8{
-                 width: 298px;
+                width: 298px;
             }
             .text9{
-                 width: 220px;
+                width: 220px;
             }
             .text10{
                 width: 206px;
             }
             .tuan{
-                 background-color: rgba(0, 0, 255, 0.7);
+                background-color: rgba(0, 0, 255, 0.7);
             }
-            
+            .additional-line {
+                width: 85%;
+                height: 1px;
+                background-color: rgba(0, 0, 0, 0.3);
+                margin-top: 0px;
+                margin-left: 120px;
+
+            }
+            .score{
+                display: flex;
+            }
+            .text20{
+                font-size: 25px;
+                margin-left: 120px;
+                margin-top: 15px;
+            }
+            .text21{
+                font-size: 25px;
+                margin-left: 100px;
+                margin-top: 15px;
+            }
+            .text22{
+                font-size: 25px;
+                margin-left: 170px;
+                margin-top: 15px;
+            }
+            .text23{
+                margin-top: 50px;
+                margin-left: -45px;
+                font-size: 25px;
+            }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
@@ -148,7 +178,7 @@
             </div>  
             <div class="rectangle"></div>
 
-            <div class="text2">Grade report for Phan Đình Tuấn (HE171507)</div>
+            <div class="text2">Grade report for ${inforstudent.lastName}${inforstudent.fristName} (${inforstudent.rollNumber})</div>
 
             <div class="text3">Report individual scores for the subject</div>
 
@@ -168,15 +198,16 @@
             <div class="bangbig">
                 <div>
                     <table class="bang1">
+
                         <c:forEach items="${requestScope.listGrade}" var="i">
                             <tr class="row2">
                                 <td class="text8">${i.assessmentName}</td>
                                 <c:choose>
                                     <c:when test="${i.assessmentName eq 'Workshop'}">
-                                        <td>workshop1</td>
+                                        <td>Workshop1</td>
                                     </c:when>
                                     <c:when test="${i.assessmentName eq 'Exercise'}">
-                                        <td>exercise1</td>
+                                        <td>Exercise1</td>
                                     </c:when>
                                     <c:when test="${i.assessmentName eq 'Progress test'}">
                                         <td>Progress test 1</td>
@@ -184,13 +215,43 @@
                                     <c:when test="${i.assessmentName eq 'Assignment' and i.subjectid.subjectID == 22}">
                                         <td>Assignment 1</td>
                                     </c:when>
+                                    <c:when test="${i.assessmentName eq 'Final Exam'  and i.subjectid.subjectID == 23}">
+                                        <c:choose>
+                                            <c:when test="${finalExamChanged}">
+                                                <td>FE: GVR</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td>FE: Listening</td>
+                                                <c:set var="finalExamChanged" value="true" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+
+                                    <c:when test="${i.assessmentName eq 'Final Exam Resit'  and i.subjectid.subjectID == 23}">
+                                        <c:choose>
+                                            <c:when test="${finalExamChanged12}">
+                                               
+                                              
+                                                <td>FE: GVR</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td>FE: Listening</td>                                              
+                                                  <c:set var="finalExamChanged12" value="true" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+
+                                                
                                     <c:otherwise>
                                         <td class="text7">${i.assessmentName}<br>Total</td>
                                         </c:otherwise>
                                     </c:choose>
-                                        <td class="text9">${Math.round(i.weight * 1000) / 10}%</td>
-
+                                <td class="text9">${Math.round(i.weight * 1000) / 10}%</td>
                             </tr>
+
+
+
+
                             <c:if test="${i.assessmentName eq 'Workshop'}">
                                 <tr class="row2">
                                     <td></td>
@@ -231,6 +292,7 @@
 
                                 </tr>
                             </c:if>
+
                         </c:forEach>
                     </table>
                 </div>
@@ -247,6 +309,9 @@
                             <c:if test="${s.subjectid.subjectID == 24 or s.subjectid.subjectID == 25}">
                                 <c:set var="isLastRowNeeded" value="true" />
                             </c:if>
+                            <c:if test="${s.subjectid.subjectID == 23}">
+                                <c:set var="isLastRowNeeded1" value="true" />
+                            </c:if>
                         </c:forEach>
                         <!-- Tạo dòng mới nếu cần -->
                         <c:if test="${isLastRowNeeded}">
@@ -254,9 +319,44 @@
                                 <td></td>
                             </tr>
                         </c:if>
+                        <c:if test="${isLastRowNeeded1}">
+                            <tr class="row4">
+                                <td></td>
+
+                            </tr>
+                            <tr class="row4">
+                                <td></td>
+
+                            </tr>
+                        </c:if>
                     </table>
                 </div>
             </div>
+            <div class="score">
+                <div class="text20">
+                    COURSE TOTAL
+                </div>
+
+                <div class="text21">
+                    AVERAGE<br/>
+                    STATUS
+                </div>
+
+                <div class="text22">${averageScore}</div>
+                <div>
+                    <c:if test="${averageScore >= 5}">
+                        <c:set var="status" value="PASS"/>
+                    </c:if>
+                    <c:if test="${averageScore < 5}">
+                        <c:set var="status" value="NOT PASS"/>
+                    </c:if>
+                    <div class="text23" style="color: ${status eq 'PASS' ? 'green' : 'red'}">${status}</div>
+
+                </div>
+
+            </div>
+
+            <div class="additional-line"></div>
 
         </form>
 
