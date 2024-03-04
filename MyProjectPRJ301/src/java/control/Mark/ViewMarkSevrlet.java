@@ -4,6 +4,7 @@
  */
 package control.Mark;
 
+import dao.attendence.StudentDBContext;
 import dao.mark.GradeDBContext;
 import dao.timetable.SubjectDBContext;
 import jakarta.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Grade;
+import model.Student;
 import model.Subject;
 
 /**
@@ -76,6 +78,14 @@ public class ViewMarkSevrlet extends HttpServlet {
         GradeDBContext gdb = new GradeDBContext();
         ArrayList<Grade> listGrades = gdb.listGrade(studentid, subjectid);
         request.setAttribute("listGrade", listGrades);
+        
+        
+        float averageScore= gdb.calculateAverage(listGrades);
+        request.setAttribute("averageScore", averageScore);
+        
+        StudentDBContext newBContext= new StudentDBContext();
+        Student inforStudent=newBContext.getStudentByID(studentid);
+        request.setAttribute("inforstudent", inforStudent);
 
         request.getRequestDispatcher("viewMark/viewDiemCuaMoiMon.jsp").forward(request, response);
     }
