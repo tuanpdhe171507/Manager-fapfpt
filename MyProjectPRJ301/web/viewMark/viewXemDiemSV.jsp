@@ -154,7 +154,13 @@
                 </div>  
                 <div class="rectangle"></div>
 
-                <div class="text2">Grade report for Phan Đình Tuấn (HE171507)</div>
+                <div class="text2">Grade report for ${inforstudent.lastName}${inforstudent.fristName} (${inforstudent.rollNumber})</div>
+                
+                
+                
+                
+                
+                
                 <div class="text3">Select a term, course ...</div>
                 <div class="container9">
                     <div class="tam1">
