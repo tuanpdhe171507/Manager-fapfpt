@@ -4,6 +4,7 @@
  */
 package control.Mark;
 
+import dao.attendence.StudentDBContext;
 import dao.mark.GradeDBContext;
 import dao.timetable.SemeterDBContext;
 import dao.timetable.SubjectDBContext;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Grade;
 import model.Semeter;
+import model.Student;
 import model.Subject;
 
 /**
@@ -70,8 +72,10 @@ public class MarkSevrlet extends HttpServlet {
         int studentid = Integer.parseInt(request.getParameter("studentid"));
         request.setAttribute("studentid", studentid);
         
+        StudentDBContext newBContext= new StudentDBContext();
         
-    
+        Student inforStudent=newBContext.getStudentByID(studentid);
+        request.setAttribute("inforstudent", inforStudent);
         
         request.getRequestDispatcher("viewMark/viewXemDiemSV.jsp").forward(request, response);
     }
@@ -102,12 +106,3 @@ public class MarkSevrlet extends HttpServlet {
     }// </editor-fold>
 
 }
-//<div>
-//                    <table class="bang3">
-//                        <c:forEach items="${requestScope.listGrade}" var="i">
-//                            <tr class="text5">
-//                                <td>${i.valueScore}</td>
-//                            </tr>
-//                        </c:forEach>
-//                    </table>
-//                </div>
