@@ -24,6 +24,10 @@
         <servlet-name>ViewMarkSevrlet</servlet-name>
         <servlet-class>control.Mark.ViewMarkSevrlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimeTableSVSevrlet</servlet-name>
+        <servlet-class>control.timetableSV.TimeTableSVSevrlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/fapfpt</url-pattern>
@@ -47,5 +51,9 @@
     <servlet-mapping>
         <servlet-name>ViewMarkSevrlet</servlet-name>
         <url-pattern>/viewmark</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimeTableSVSevrlet</servlet-name>
+        <url-pattern>/timetablesinhvien</url-pattern>
     </servlet-mapping>
 </web-app>
