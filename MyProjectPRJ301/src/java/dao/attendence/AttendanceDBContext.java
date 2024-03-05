@@ -109,6 +109,31 @@ public class AttendanceDBContext extends DBContext {
         }
         return atts;
     }
+    
+    public Attendence AttendencesByID(int seid) {
+      
+        String sql = "Select AttendenceID,isPresent,RecordTime,Comment,SessionID,StudentID from Attendence \n"
+                + "where AttendenceID=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, seid);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Attendence attendence = new Attendence();
+
+                attendence.setAttendenceID(rs.getInt("AttendenceID"));
+                attendence.setIsPresent(rs.getBoolean("isPresent"));
+                attendence.setDatetime(rs.getTimestamp("RecordTime"));
+                attendence.setComment(rs.getString("Comment"));
+                attendence.setSession(new SessionDBContext().getSessionByID(rs.getInt("SessionID")));
+                attendence.setStudent(new StudentDBContext().getStudentByID(rs.getInt("StudentID")));
+               return attendence;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
 
