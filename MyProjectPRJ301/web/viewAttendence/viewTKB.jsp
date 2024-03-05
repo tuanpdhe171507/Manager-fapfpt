@@ -107,12 +107,12 @@
                         <th rowspan="2" class="text5">
 
                             YEAR:
-                            <select name="year">
-                                <c:forEach items="${requestScope.years}" var="year">
-
-                                    <option value="${year}"  <c:if test="${year == curentYear}">
-                                            selected="selected"
-                                        </c:if>>
+                            <select name="year" onchange="this.form.submit()">
+                                <c:forEach items="${years}" var="year">
+                                    <option value="${year}"  
+                                            <c:if test="${year == curentYear}">
+                                                selected="selected"
+                                            </c:if>>
                                         ${year}
                                     </option>
                                 </c:forEach>
@@ -165,7 +165,7 @@
                                                     <c:if test="${session.isTaken}">Edit</c:if>
                                                     <c:if test="${!session.isTaken}">Take</c:if>
                                                     </a></h4>
-                                                    
+
                                                 <div class="text7">                                           
                                                     (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
                                             </div>
