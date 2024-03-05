@@ -79,6 +79,8 @@ public class TimeTableSevrlet extends HttpServlet {
         List<Integer> listYear = db.getListYearTimeTables();
         request.setAttribute("years", listYear);
 
+ 
+        
         List<WeekTimeTable> listDayAndMonth = db.getListDayAndMonthTimeTables(year);
         request.setAttribute("dayAndMonth", listDayAndMonth);
 
