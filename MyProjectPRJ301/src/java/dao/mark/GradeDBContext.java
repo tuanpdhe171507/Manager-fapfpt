@@ -26,7 +26,7 @@ public class GradeDBContext extends DBContext {
 
     public ArrayList<Grade> listGrade(int studentID, int subjectID) {
         ArrayList<Grade> lists = new ArrayList();
-        String sql = "select sj.SubjectID,a.name,g.weight,c.value from Score as c\n"
+        String sql = "select sj.SubjectID,a.aid,a.name,g.weight,c.value from Score as c\n"
                 + "inner join Grade as g\n"
                 + "On c.assessmentId=g.assessmentId and c.subjectId=g.subjectCode\n"
                 + "inner join Assessment as a\n"
@@ -44,6 +44,7 @@ public class GradeDBContext extends DBContext {
 
                 Assessment ass = new Assessment();
                 grade.setSubjectid(new SubjectDBContext().getByIDSubject(rs.getInt("SubjectID")));
+                grade.setAsid(new AssessmentDBContext().listAssessment(rs.getInt("aid")));
                 ass.setName(rs.getString("name"));
                 grade.setAssessmentName(rs.getString("name"));
                 grade.setWeight(rs.getFloat("weight"));
@@ -60,24 +61,29 @@ public class GradeDBContext extends DBContext {
     public float calculateAverage(ArrayList<Grade> grades) {
         float totalWeightedScore = 0;
 
-        boolean hasFinalExamResit = false; // Biến để kiểm tra xem có Final Exam Resit hay không
-        float finalExamResitValue = 0; // Biến để lưu giá trị của Final Exam Resit
-
+        boolean hasFinalExamResit = false; 
+        float finalExamResitValue = 0; 
+        float diem = 0;
         for (Grade grade : grades) {
             String assessmentName = grade.getAssessmentName();
             float weight = grade.getWeight();
             float value = grade.getValueScore();
 
+            if (grade.getAsid().getAssessmentID() == 5) {
+                diem = weight * value;
+            }
             // Nếu assessmentName là "Final Exam Resit" và value lớn hơn 0
             if (assessmentName.equalsIgnoreCase("Final Exam Resit") && value > 0) {
-                hasFinalExamResit = true;
-                finalExamResitValue = value;
-            } else if (assessmentName.equalsIgnoreCase("Final Exam") && value > 0 && finalExamResitValue < 0) {
+                // Thêm điểm mới của "Final Exam Resit"
+                totalWeightedScore += weight * value;
+                // Trừ điểm đã tính trước đó
+                totalWeightedScore -= diem;
+            } else if (assessmentName.trim().equalsIgnoreCase("Final Exam") && value > 0 && finalExamResitValue < 0) {
                 // Nếu có cả "Final Exam" và "Final Exam Resit" và value của Final Exam Resit < 0
                 totalWeightedScore += weight * value;
-            } else if (assessmentName.equalsIgnoreCase("Final Exam") && hasFinalExamResit && finalExamResitValue > 0) {
+            } else if (assessmentName.trim().equalsIgnoreCase("Final Exam") && hasFinalExamResit && finalExamResitValue > 0) {
                 // Nếu có cả "Final Exam" và "Final Exam Resit" và value của Final Exam Resit > 0
-                totalWeightedScore += weight * finalExamResitValue;
+                totalWeightedScore += weight * value;
             } else {
                 // Sử dụng điểm của assessmentName khác hoặc điểm là 0 để tính tổng điểm trọng số
                 totalWeightedScore += weight * value;
@@ -96,7 +102,7 @@ public class GradeDBContext extends DBContext {
         GradeDBContext dbContext = new GradeDBContext();
 
         // Lấy danh sách các điểm của học sinh có ID là 1 cho môn học có ID là 23
-        ArrayList<Grade> grades = dbContext.listGrade(1, 24);
+        ArrayList<Grade> grades = dbContext.listGrade(1, 22);
 
         // Tính điểm trung bình từ danh sách điểm
         float averageScore = dbContext.calculateAverage(grades);
