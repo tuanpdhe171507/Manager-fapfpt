@@ -111,14 +111,14 @@ public class WeekTimeTableDBContext extends DBContext {
 
     public static void main(String[] args) {
 //
-//        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
+        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
 //        List<WeekTimeTable> list = c.getListDayAndMonthTimeTables(2024);
 //        for (WeekTimeTable weekTimeTable : list) {
 //            System.out.println(weekTimeTable.getWeekRange());
 //        }
 
-        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
-//        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy");
 //        try {
 //            Date startDate = Date.valueOf("2024-01-01");
 //            Date endDate = Date.valueOf("2024-01-07");
@@ -129,7 +129,7 @@ public class WeekTimeTableDBContext extends DBContext {
 //        } catch (IllegalArgumentException e) {
 //            System.out.println("Invalid date format.");
 //        }
-        System.out.println(c.getDayAndMonth().getStartDate());
+        System.out.println(c.getDayAndMonth().getStartDate().getYear()+1900);
 //        Date currentDate = new Date();
 //
 //        int day = currentDate.getDate();
