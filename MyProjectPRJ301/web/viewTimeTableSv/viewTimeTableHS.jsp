@@ -5,6 +5,8 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -260,20 +262,51 @@
                                 <td>
                                     <c:set var="hasSession" value="false" />
                                     <c:forEach items="${requestScope.funtions}" var="session">
-                                        <c:if test="${session.date eq date and session.timeSlot.id eq slot.id}">
+                                        <c:if test="${session.date eq date and session.timeslot.id eq slot.id}">
 
-                                            ${session.subject.code}-<input class="text66" type="submit" value="view Materials"/><br/>
+                                            ${session.group.subject.code}-<input class="text66" type="submit" value="view Materials"/><br/>
                                             at ${session.room.name}<br/>
                                             <h4 class="text8"><a>
-                                                    <c:if test="${session.attendence.isPresent}"><h6 class="text78">(attended)</h6></c:if>
-                                                    <c:if test="${!session.attendence.isPresent and session.attendence.isPresent !=null }"><h6 class="text79">(absent)</h6></c:if>
-                                                    <c:if test="${session.attendence.isPresent eq null}">
+
+
+
+                                                    <c:set var="sessionDate" value="${session.date}" />
+                                                    <c:set var="dayNow" value="${daynow}" />
+
+                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and session.isTaken}">
+                                                        <h6 class="text78">(attended)</h6>
+                                                    </c:if>
+
+                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and !session.isTaken}">
+                                                        <h6 class="text79">(absent)</h6>
+                                                    </c:if>
+
+
+
+                                                    <c:if test="${(sessionDate.time gt dayNow.time )}">
                                                         <h6 class="text79">(Not yet)</h6>
                                                     </c:if>
+
+                                                    <c:if test="${(sessionDate.time eq dayNow.time ) and session.isTaken}">
+                                                        <h6 class="text78">(attended)</h6>
+                                                    </c:if>
+
+                                                    <c:if test="${(sessionDate.time eq dayNow.time ) and !session.isTaken}">
+                                                        <h6 class="text79">(absent)</h6>
+                                                    </c:if>
+
+                                                    <c:if test="${sessionDate.time eq dayNow.time and (session.isTaken ne false and session.isTaken ne true)}">
+                                                        <h6 class="text79">(Not yet)</h6>
+                                                    </c:if>
+
+
+
+
+
                                                 </a></h4>
 
                                             <div class="text77">                                           
-                                                (${session.timeSlot.timeStart}-${session.timeSlot.timeEnd})
+                                                (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
                                             </div>
 
                                             <c:set var="hasSession" value="true" />
