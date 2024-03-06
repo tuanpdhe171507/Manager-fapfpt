@@ -5,7 +5,6 @@
 package control.timetableSV;
 
 import dao.WeekTimeTableDBContext;
-import dao.timetable.FuntionVSDBContext;
 import dao.timetable.SessionDBContext;
 import dao.timetable.TimeSlotDBContext;
 import java.io.IOException;
@@ -16,10 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import model.FuntionSV;
 import model.Session;
 import model.TimeSlot;
 import model.WeekTimeTable;
@@ -78,8 +77,6 @@ public class TimeTableSVSevrlet extends HttpServlet {
         List<Integer> listYear = db.getListYearTimeTables();
         request.setAttribute("years", listYear);
 
-        
-        
         List<WeekTimeTable> listDayAndMonth = db.getListDayAndMonthTimeTables(year);
         request.setAttribute("dayAndMonth", listDayAndMonth);
 
@@ -129,10 +126,19 @@ public class TimeTableSVSevrlet extends HttpServlet {
         List<TimeSlot> listSlot = sbd.listSlot();
         request.setAttribute("slots", listSlot);
 
-        
-        FuntionVSDBContext funtionVSDBContext = new FuntionVSDBContext();
-        List<FuntionSV> funtionSVs = funtionVSDBContext.getFuntionList();
-        request.setAttribute("funtions", funtionSVs);
+        SessionDBContext sessionDBContext = new SessionDBContext();
+        List<Session> listSessions = sessionDBContext.getSession();
+        request.setAttribute("funtions", listSessions);
+
+        LocalDate currentDate1 = LocalDate.now();
+        int year1 = currentDate1.getYear();
+        int month1 = currentDate1.getMonthValue();
+        int day1 = currentDate1.getDayOfMonth();
+        Date currentDate2 = new Date(year1 - 1900, month1 - 1, day1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date formattedDate = new java.sql.Date(currentDate2.getTime());
+        request.setAttribute("daynow", formattedDate);
+
         request.getRequestDispatcher("viewTimeTableSv/viewTimeTableHS.jsp").forward(request, response);
 
     }
