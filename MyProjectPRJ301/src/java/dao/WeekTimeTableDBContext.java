@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Session;
 import model.WeekTimeTable;
 
 /**
@@ -111,7 +114,7 @@ public class WeekTimeTableDBContext extends DBContext {
 
     public static void main(String[] args) {
 //
-        WeekTimeTableDBContext c = new WeekTimeTableDBContext();
+       // WeekTimeTableDBContext c = new WeekTimeTableDBContext();
 //        List<WeekTimeTable> list = c.getListDayAndMonthTimeTables(2024);
 //        for (WeekTimeTable weekTimeTable : list) {
 //            System.out.println(weekTimeTable.getWeekRange());
@@ -129,7 +132,7 @@ public class WeekTimeTableDBContext extends DBContext {
 //        } catch (IllegalArgumentException e) {
 //            System.out.println("Invalid date format.");
 //        }
-        System.out.println(c.getDayAndMonth().getStartDate().getYear()+1900);
+       // System.out.println(c.getDayAndMonth());
 //        Date currentDate = new Date();
 //
 //        int day = currentDate.getDate();
@@ -139,6 +142,10 @@ public class WeekTimeTableDBContext extends DBContext {
 //        System.out.println("Ngày: " + day);
 //        System.out.println("Tháng: " + month);
 //        System.out.println("Năm: " + year);
+
+
+       
+    
     }
 
     public List<Date> getListDaysInWeek(Date startDate, Date endDate) {
