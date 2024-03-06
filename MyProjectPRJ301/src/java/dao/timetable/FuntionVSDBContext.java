@@ -23,8 +23,18 @@ public class FuntionVSDBContext extends DBContext {
 
     public ArrayList<FuntionSV> getFuntionList() {
         ArrayList<FuntionSV> list = new ArrayList();
-        String sql = "select f.FuntionsvID,f.Date,f.StudentID,f.RoomID,f.SubjectID,f.TimeSlotID,f.AttendanceID\n"
-                + "from FuntionSV as f";
+        String sql = "select se.Date,b.SubjectCode,t.TimeStart,t.TimeEnd from Attendence as a\n"
+                + "join Session as se\n"
+                + "On a.SessionID=se.SessionID\n"
+                + "join [Group]as g\n"
+                + "On g.GroupID=se.GroupID\n"
+                + "join Subject as b\n"
+                + "On b.SubjectID=g.SubjectID\n"
+                + "join Student as s\n"
+                + "On s.StudentID=a.StudentID\n"
+                + "join TimeSlot as t\n"
+                + "ON t.TimeSlotID=se.TimeSlotID\n"
+                + "where  s.StudentID=13";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
@@ -46,21 +56,21 @@ public class FuntionVSDBContext extends DBContext {
         }
         return list;
     }
-    
-    public static void main(String[] args) {
-    FuntionVSDBContext funtionVSDBContext = new FuntionVSDBContext();
-    ArrayList<FuntionSV> funtionList = funtionVSDBContext.getFuntionList();
 
-    // In ra danh sách các FunctionSV
-    for (FuntionSV funtionSV : funtionList) {
-        System.out.println("FunctionSV ID: " + funtionSV.getFuntionsvID());
-        System.out.println("Date: " + funtionSV.getDate());
-        System.out.println("Student ID: " + funtionSV.getStudentid());
-        System.out.println("Room ID: " + funtionSV.getRoom());
-        System.out.println("Subject ID: " + funtionSV.getSubject().getSubjectID());
-        System.out.println("TimeSlot ID: " + funtionSV.getTimeSlot());
-       
-        System.out.println("------------------------------------");
+    public static void main(String[] args) {
+        FuntionVSDBContext funtionVSDBContext = new FuntionVSDBContext();
+        ArrayList<FuntionSV> funtionList = funtionVSDBContext.getFuntionList();
+
+        // In ra danh sách các FunctionSV
+        for (FuntionSV funtionSV : funtionList) {
+            System.out.println("FunctionSV ID: " + funtionSV.getFuntionsvID());
+            System.out.println("Date: " + funtionSV.getDate());
+            System.out.println("Student ID: " + funtionSV.getStudentid());
+            System.out.println("Room ID: " + funtionSV.getRoom());
+            System.out.println("Subject ID: " + funtionSV.getSubject().getSubjectID());
+            System.out.println("TimeSlot ID: " + funtionSV.getTimeSlot());
+
+            System.out.println("------------------------------------");
+        }
     }
-}
 }
