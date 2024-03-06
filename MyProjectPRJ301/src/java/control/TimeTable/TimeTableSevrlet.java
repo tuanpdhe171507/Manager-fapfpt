@@ -4,6 +4,7 @@
  */
 package control.TimeTable;
 
+import controller.authentication.authorization.BaseRBACController;
 import dao.CampusDBContext;
 
 import dao.WeekTimeTableDBContext;
@@ -23,6 +24,9 @@ import java.util.List;
 import model.Login.Campus;
 import model.WeekTimeTable;
 import java.sql.*;
+import model.Account;
+import model.Login.Login;
+import model.Role;
 import model.Session;
 import model.TimeSlot;
 
@@ -30,7 +34,7 @@ import model.TimeSlot;
  *
  * @author G5 5590
  */
-public class TimeTableSevrlet extends HttpServlet {
+public class TimeTableSevrlet extends  BaseRBACController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -67,8 +71,8 @@ public class TimeTableSevrlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles)
             throws ServletException, IOException {
         Date currentDate = new Date();
 
@@ -149,8 +153,8 @@ public class TimeTableSevrlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles)
             throws ServletException, IOException {
 
     }
@@ -160,9 +164,11 @@ public class TimeTableSevrlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
+  
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+   
 
 }
