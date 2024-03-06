@@ -40,7 +40,7 @@
 
             .ht{
                 width:450px;
-                height: 190px;
+                height: 290px;
                 border: 1px solid #000;
                 margin: 2px;
                 margin-left: 100px;
@@ -52,7 +52,7 @@
             }
             .ht1{
                 width:750px;
-                height: 190px;
+                height: 290px;
                 border: 1px solid #000;
                 margin: 2px;
                 margin-left: -120px;
@@ -85,11 +85,11 @@
                 border-radius: 5px;
                 margin-top: -35px;
             }
-            
+
         </style>
     </head>
     <body>
-        <form action="">
+        <form action="login" method="POST">
             <div class="container">
                 <div class="row cc">
                     <div class="col-md-6">
@@ -124,12 +124,17 @@
                         </div>
                         <div><h5>Information Access(Tra cứu thông tin)</h5></div>
                         <div class="text3">
-                            <div>
-                            <h7><a href="timetable">Weekly Timetable</a></h7><h7>(Thời khóa biểu từng tuần)</h7>
-                             </div>
-                            <div>
-                                <h7><a href="">Academic Transcript</a></h7><h7>(Academic Transcript)</h7>
-                            </div>
+<!--                            <div>
+                                <h7><a href="timetable">Weekly Timetable</a></h7><h7>(Thời khóa biểu từng tuần)</h7>
+                            </div>-->
+                           
+
+
+
+                            <h4>Enter useranme and password of Lecture or Student</h4>
+                            UserName: <input type="text" name="username"/><br/><br/><!-- comment -->
+                            PassWord: <input type="text" name="password"/><br/><br/><!-- comment -->
+                            <input type="submit" value="Login"/>
                         </div>
                     </div>
                 </div>
