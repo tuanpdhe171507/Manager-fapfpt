@@ -111,14 +111,9 @@ public class SessionDBContext extends DBContext {
 
         // In ra thông tin về các session
         for (Session session : sessions) {
-            System.out.println("Session ID: " + session.getSessionID());
+          
             System.out.println("Date: " + session.getDate());
-            System.out.println("Is Taken: " + session.getIsTaken());
-            System.out.println("Group ID: " + session.getGroup().getGroupID());
-            System.out.println("Teacher ID: " + session.getTeacher().getTeacherID());
-            System.out.println("Room ID: " + session.getRoom());
-            System.out.println("Time Slot ID: " + session.getTimeslot());
-            System.out.println("--------------------------------------------");
+            
         }
     }
 
