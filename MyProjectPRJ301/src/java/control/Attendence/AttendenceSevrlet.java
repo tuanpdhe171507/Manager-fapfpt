@@ -4,17 +4,19 @@
  */
 package control.Attendence;
 
+import controller.authentication.authorization.BaseRBACController;
 import dao.attendence.AttendanceDBContext;
 import dao.attendence.StudentDBContext;
 import dao.timetable.SessionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Account;
 import model.Attendence;
+import model.Role;
 import model.Session;
 import model.Student;
 
@@ -22,7 +24,7 @@ import model.Student;
  *
  * @author G5 5590
  */
-public class AttendenceSevrlet extends HttpServlet {
+public class AttendenceSevrlet extends BaseRBACController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,7 +62,7 @@ public class AttendenceSevrlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account, ArrayList<Role> roles)
             throws ServletException, IOException {
 
         SessionDBContext sdb = new SessionDBContext();
@@ -86,7 +88,7 @@ public class AttendenceSevrlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account, ArrayList<Role> roles)
             throws ServletException, IOException {
 
 
@@ -122,5 +124,8 @@ public class AttendenceSevrlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+  
+  
 
 }
