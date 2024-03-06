@@ -7,11 +7,14 @@ package dao.attendence;
 import com.sun.jdi.connect.spi.Connection;
 import dao.CampusDBContext;
 import dao.DBContext;
+import dao.timetable.FuntionVSDBContext;
 import dao.timetable.GroupDBContext;
 import dao.timetable.GroupStudentDBContext;
+import dao.timetable.RoomDBContext;
 import dao.timetable.SessionDBContext;
 import dao.timetable.SubjectDBContext;
 import dao.timetable.TeacherDBContext;
+import dao.timetable.TimeSlotDBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Attendence;
+import model.FuntionSV;
 import model.Group;
 import model.GroupStudent;
 import model.Student;
@@ -109,9 +113,9 @@ public class AttendanceDBContext extends DBContext {
         }
         return atts;
     }
-    
+
     public Attendence AttendencesByID(int seid) {
-      
+
         String sql = "Select AttendenceID,isPresent,RecordTime,Comment,SessionID,StudentID from Attendence \n"
                 + "where AttendenceID=?";
         try {
@@ -127,7 +131,7 @@ public class AttendanceDBContext extends DBContext {
                 attendence.setComment(rs.getString("Comment"));
                 attendence.setSession(new SessionDBContext().getSessionByID(rs.getInt("SessionID")));
                 attendence.setStudent(new StudentDBContext().getStudentByID(rs.getInt("StudentID")));
-               return attendence;
+                return attendence;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,19 +139,56 @@ public class AttendanceDBContext extends DBContext {
         return null;
     }
 
+    public ArrayList<Attendence> getFuntionList() {
+        ArrayList<Attendence> list = new ArrayList();
+        String sql = "select se.Date,a.isPresent,b.SubjectID,t.TimeSlotID,r.RoomID from Attendence as a\n"
+                + "join Session as se\n"
+                + "On a.SessionID=se.SessionID\n"
+                + "join [Group]as g\n"
+                + "On g.GroupID=se.GroupID\n"
+                + "join Subject as b\n"
+                + "On b.SubjectID=g.SubjectID\n"
+                + "join Student as s\n"
+                + "On s.StudentID=a.StudentID\n"
+                + "join TimeSlot as t\n"
+                + "ON t.TimeSlotID=se.TimeSlotID\n"
+                + "join Room as r\n"
+                + "On r.RoomID= se.RoomID\n"
+                + "where  s.StudentID=13";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Attendence attendence = new Attendence();
+
+                attendence.setDateSQL(rs.getDate("Date"));
+                attendence.setIsPresent(rs.getBoolean("isPresent"));
+                attendence.setSubject(new SubjectDBContext().getByIDSubject(rs.getInt("SubjectID")));
+                attendence.setTimeslot(new TimeSlotDBContext().getTimeSlotByID(rs.getInt("TimeSlotID")));
+                attendence.setRoom(new RoomDBContext().getRoomByID(rs.getInt("RoomID")));
+
+                list.add(attendence);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
+        // Tạo một đối tượng AttendanceDBContext
+        AttendanceDBContext context = new AttendanceDBContext();
 
-        AttendanceDBContext db = new AttendanceDBContext();
+        // Gọi phương thức getFuntionList() và lưu trữ kết quả vào một danh sách
+        ArrayList<Attendence> attendanceList = context.getFuntionList();
 
-        ArrayList<Attendence> attendences = db.listAttendencesByID(1);
-
-        // In ra thông tin về các điểm danh
-        for (Attendence attendance : attendences) {
-            System.out.println("Student ID: " + attendance.getAttendenceID());
-            System.out.println("Group Name: " + attendance.getSession());
-            System.out.println("Roll Number: " + attendance.getStudent());
-
-            System.out.println("--------------------------------------------");
+        // In ra thông tin từ danh sách
+        for (Attendence attendance : attendanceList) {
+            System.out.println("Date: " + attendance.getDateSQL());
+            System.out.println("Is Present: " + attendance.getIsPresent());
+            System.out.println("Subject ID: " + attendance.getSubject().getSubjectID());
+            System.out.println("TimeSlot ID: " + attendance.getTimeslot());
+            System.out.println("TimeSlot ID: " + attendance.getRoom());
         }
     }
 
