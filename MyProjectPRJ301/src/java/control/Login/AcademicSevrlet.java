@@ -5,12 +5,14 @@
 
 package control.Login;
 
+import controller.authentication.authorization.BaseRequiredAuthenticationController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Login.Login;
 
 
@@ -18,7 +20,7 @@ import model.Login.Login;
  *
  * @author G5 5590
  */
-public class AcademicSevrlet extends BaseAuthenticationCotroller {
+public class AcademicSevrlet extends BaseRequiredAuthenticationController {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -53,7 +55,7 @@ public class AcademicSevrlet extends BaseAuthenticationCotroller {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response,Login login)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         request.getRequestDispatcher("view/Academic.jsp").forward(request, response);
     } 
@@ -66,7 +68,7 @@ public class AcademicSevrlet extends BaseAuthenticationCotroller {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response,Login login)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account)
     throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -80,4 +82,5 @@ public class AcademicSevrlet extends BaseAuthenticationCotroller {
         return "Short description";
     }// </editor-fold>
 
+   
 }
