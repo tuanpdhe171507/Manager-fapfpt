@@ -43,7 +43,7 @@ public class StudentDBContext extends DBContext {
                 student.setImage(rs.getString("Image"));
                 student.setGender(rs.getBoolean("Gender"));
                 student.setAddress(rs.getString("Address"));
-                student.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
+                
 
                 return student;
             }
