@@ -7,6 +7,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.TblUsers;
@@ -89,6 +90,30 @@ public class TblUsersDBContext extends DBContext {
             Logger.getLogger(TblUsersDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    
+    public ArrayList<TblUsers> getListTblUsers() {
+          ArrayList<TblUsers> list= new ArrayList<>();
+        try {
+            String sql = "select t.userID,t.fullName,t.password,t.roleID,t.status from tblUsers as t";
+            PreparedStatement st = connection.prepareStatement(sql);
+        
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                TblUsers tblUsers = new TblUsers();
+                tblUsers.setUserId(rs.getString("userID"));
+                tblUsers.setFullName(rs.getString("fullName"));
+                tblUsers.setPassWord(rs.getString("password"));
+                tblUsers.setRoleID(rs.getString("roleID"));
+                tblUsers.setStatus(rs.getBoolean("status"));
+                list.add(tblUsers);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TblUsersDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     public static void main(String[] args) {

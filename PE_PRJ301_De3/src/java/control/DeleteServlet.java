@@ -4,9 +4,9 @@
  */
 package control;
 
+import dao.DeleteDBContext;
 import dao.TblCapstonesDBContext;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,22 +18,26 @@ import model.TblUsers;
  *
  * @author G5 5590
  */
-public class SearchServlet  extends BaseAuthenticationCotroller{
+public class DeleteServlet extends BaseAuthenticationCotroller {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, TblUsers account) throws ServletException, IOException {
-                
-                String name = req.getParameter("searchname");
-                TblCapstonesDBContext tblCapstonesDBContext = new TblCapstonesDBContext();
-                ArrayList<TblCapstones> listsByName = tblCapstonesDBContext.searchByName(name);
-                req.setAttribute("lists", listsByName);               
-                req.getRequestDispatcher("captstonesList.jsp").forward(req, resp);
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, TblUsers account) throws ServletException, IOException {
-
-             req.getRequestDispatcher("captstonesList.jsp").forward(req, resp);
+        String id = req.getParameter("id");
+        DeleteDBContext db = new DeleteDBContext();
+        TblCapstones capstones = new TblCapstones();
+        capstones.setCapid(id);
+        db.delete(capstones);
+        
+      
+        TblCapstonesDBContext tblCapstonesDBContext = new TblCapstonesDBContext();
+        ArrayList<TblCapstones> listsByName = tblCapstonesDBContext.listTblCapstoneses();
+        req.setAttribute("lists", listsByName);
+        req.getRequestDispatcher("captstonesList.jsp").forward(req, resp);
     }
-    
+
 }

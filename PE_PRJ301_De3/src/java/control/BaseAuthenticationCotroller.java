@@ -4,7 +4,8 @@
  */
 package control;
 
-import dao.AccountDBContex;
+
+import dao.TblUsersDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -12,50 +13,31 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import model.Account;
+import model.TblUsers;
+
 
 /**
  *
  * @author G5 5590
  */
 public abstract class BaseAuthenticationCotroller extends HttpServlet{
-    private Account getAuthenticatedAccount(HttpServletRequest req)
+    private TblUsers getAuthenticatedAccount(HttpServletRequest req)
     {
-        //được gọi từ AccountServlet sang
-      Account account = (Account) req.getSession().getAttribute("account");
+        
+      TblUsers account = (TblUsers) req.getSession().getAttribute("account");
       if(account == null)
       {
-//          Cookie[] cookies = req.getCookies();
-//          if(cookies!=null)
-//          {
-//              String username = null;
-//              String password = null;
-//              for (Cookie cooky : cookies) {
-//                  if(cooky.getName().equals("username"))
-//                      username = cooky.getValue();
-//                  
-//                  if(cooky.getName().equals("password"))
-//                      password = cooky.getValue();
-//                  
-//                  if(username !=null && password!=null)
-//                      break;
-//              }
-          
-          
-                  // Lấy session từ request
+
               HttpSession session= req.getSession();
-               //lấy giá trị của thuộc tính có tên "userN" từ session và gán vào biến username
+              
               String username =(String) session.getAttribute("userN");
-              //Chú ý rằng "userN" là tên của thuộc tính được sử dụng để lưu trữ tên người dùng trong session.
+          
               String password = (String) session.getAttribute("passW");
               if(username !=null && password!=null)
               {
-                  AccountDBContex db = new AccountDBContex();
+                  TblUsersDBContext db = new TblUsersDBContext();
                   account = db.getByUsernamePassword(username, password);
-                  
-                  //: Sau khi tìm kiếm thành công, đối tượng account được lưu vào session với tên thuộc tính là "account".
-                  //Điều này cho phép truy cập vào thông tin tài khoản này từ các trang hoặc
-                  //yêu cầu servlet khác sau này trong cùng một phiên làm việc.
+          
                   req.getSession().setAttribute("account", account);
               }
           }
@@ -63,12 +45,12 @@ public abstract class BaseAuthenticationCotroller extends HttpServlet{
       return account;
     }
     
-    protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp, Account account)
+    protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp, TblUsers account)
             throws ServletException, IOException; 
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Account account = getAuthenticatedAccount(req);
+        TblUsers account = getAuthenticatedAccount(req);
         if(account!=null)
         {
             doPost(req, resp, account);
@@ -80,11 +62,11 @@ public abstract class BaseAuthenticationCotroller extends HttpServlet{
     
     }
 
-    protected abstract void doGet(HttpServletRequest req, HttpServletResponse resp, Account account)
+    protected abstract void doGet(HttpServletRequest req, HttpServletResponse resp, TblUsers account)
             throws ServletException, IOException; 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    Account account = getAuthenticatedAccount(req);
+    TblUsers account = getAuthenticatedAccount(req);
         if(account!=null)
         {
             doGet(req, resp, account);
