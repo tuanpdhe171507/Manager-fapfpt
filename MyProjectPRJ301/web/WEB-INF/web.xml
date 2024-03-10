@@ -32,6 +32,14 @@
         <servlet-name>LoginServletPQ</servlet-name>
         <servlet-class>control.LoginLectureAndStudent.LoginServletPQ</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AttendanceSVSevrlet</servlet-name>
+        <servlet-class>control.Attendence.AttendanceSVSevrlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarkSVSevrlet</servlet-name>
+        <servlet-class>control.Mark.MarkSVSevrlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/fapfpt</url-pattern>
@@ -63,5 +71,13 @@
     <servlet-mapping>
         <servlet-name>LoginServletPQ</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceSVSevrlet</servlet-name>
+        <url-pattern>/attendanceSV</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarkSVSevrlet</servlet-name>
+        <url-pattern>/marksv</url-pattern>
     </servlet-mapping>
 </web-app>
