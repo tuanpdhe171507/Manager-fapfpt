@@ -17,11 +17,12 @@ public class Session {
     private Teacher teacher;
     private Room room;
     private TimeSlot timeslot;
-
+    private Attendence attendence;
+   
     public Session() {
     }
 
-    public Session(int sessionID, Date date, Boolean isTaken, Group group, Teacher teacher, Room room, TimeSlot timeslot) {
+    public Session(int sessionID, Date date, Boolean isTaken, Group group, Teacher teacher, Room room, TimeSlot timeslot, Attendence attendence) {
         this.sessionID = sessionID;
         this.date = date;
         this.isTaken = isTaken;
@@ -29,7 +30,18 @@ public class Session {
         this.teacher = teacher;
         this.room = room;
         this.timeslot = timeslot;
+        this.attendence = attendence;
     }
+
+    public Attendence getAttendence() {
+        return attendence;
+    }
+
+    public void setAttendence(Attendence attendence) {
+        this.attendence = attendence;
+    }
+
+    
 
     public int getSessionID() {
         return sessionID;
@@ -95,8 +107,9 @@ public class Session {
 
     @Override
     public String toString() {
-        return "Session{" + "SessionID=" + sessionID + ", date=" + date + ", IsTaken=" + isTaken + ", group=" + group + ", teacher=" + teacher + ", room=" + room + ", timeslot=" + timeslot + '}';
+        return "Session{" + "sessionID=" + sessionID + ", date=" + date + ", isTaken=" + isTaken + ", group=" + group + ", teacher=" + teacher + ", room=" + room + ", timeslot=" + timeslot + ", attendence=" + attendence + '}';
     }
-    
+
+   
     
 }
