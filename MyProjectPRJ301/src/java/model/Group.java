@@ -13,15 +13,17 @@ public class Group {
     private String groupName;
     private Subject subject;
     private Teacher teacher;
+    private Semeter semeter;
 
     public Group() {
     }
 
-    public Group(int groupID, String groupName, Subject subject, Teacher teacher) {
+    public Group(int groupID, String groupName, Subject subject, Teacher teacher, Semeter semeter) {
         this.groupID = groupID;
         this.groupName = groupName;
         this.subject = subject;
         this.teacher = teacher;
+        this.semeter = semeter;
     }
 
     public int getGroupID() {
@@ -56,11 +58,20 @@ public class Group {
         this.teacher = teacher;
     }
 
-    @Override
-    public String toString() {
-        return "Group{" + "groupID=" + groupID + ", groupName=" + groupName + ", subject=" + subject + ", teacher=" + teacher + '}';
+    public Semeter getSemeter() {
+        return semeter;
     }
 
+    public void setSemeter(Semeter semeter) {
+        this.semeter = semeter;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" + "groupID=" + groupID + ", groupName=" + groupName + ", subject=" + subject + ", teacher=" + teacher + ", semeter=" + semeter + '}';
+    }
+
+  
    
     
 }
