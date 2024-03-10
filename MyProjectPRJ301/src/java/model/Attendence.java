@@ -20,11 +20,12 @@ public class Attendence {
     private Subject subject;
     private TimeSlot timeslot;
     private Room room;
+    private Teacher teacher;
 
     public Attendence() {
     }
 
-    public Attendence(int attendenceID, Boolean isPresent, Date datetime, String comment, Session session, Student student, java.sql.Date dateSQL, Subject subject, TimeSlot timeslot,Room room) {
+    public Attendence(int attendenceID, Boolean isPresent, Date datetime, String comment, Session session, Student student, java.sql.Date dateSQL, Subject subject, TimeSlot timeslot, Room room, Teacher teacher) {
         this.attendenceID = attendenceID;
         this.isPresent = isPresent;
         this.datetime = datetime;
@@ -34,9 +35,19 @@ public class Attendence {
         this.dateSQL = dateSQL;
         this.subject = subject;
         this.timeslot = timeslot;
-        this.room=room;
+        this.room = room;
+        this.teacher = teacher;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+   
     public Room getRoom() {
         return room;
     }
@@ -119,10 +130,10 @@ public class Attendence {
 
     @Override
     public String toString() {
-        return "Attendence{" + "attendenceID=" + attendenceID + ", isPresent=" + isPresent + ", datetime=" + datetime + ", comment=" + comment + ", session=" + session + ", student=" + student + ", dateSQL=" + dateSQL + ", subject=" + subject + ", timeslot=" + timeslot + ", room=" + room + '}';
+        return "Attendence{" + "attendenceID=" + attendenceID + ", isPresent=" + isPresent + ", datetime=" + datetime + ", comment=" + comment + ", session=" + session + ", student=" + student + ", dateSQL=" + dateSQL + ", subject=" + subject + ", timeslot=" + timeslot + ", room=" + room + ", teacher=" + teacher + '}';
     }
 
-
+    
     
     
     
