@@ -249,11 +249,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                 <td class="text9">${Math.round(i.weight * 1000) / 10}%<br>Total:${Math.round(i.weight * 1000) / 10}</td>
-
                             </tr>
-
-
-
 
                             <c:if test="${i.assessmentName eq 'Workshop'}">
                                 <tr class="row2">
