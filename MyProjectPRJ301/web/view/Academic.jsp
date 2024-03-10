@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,24 +39,13 @@
                 width: 100%;
             }
 
-            .ht{
-                width:450px;
-                height: 290px;
-                border: 1px solid #000;
-                margin: 2px;
-                margin-left: 100px;
-                border-radius: 5px;
-                box-shadow: 5px 5px 2px -2px rgb(200, 199, 199),
-                    -5px -5px 2px -2px rgb(200, 199, 199),
-                    5px -5px 2px -2px rgb(200, 199, 199),
-                    -5px 5px 2px -2px rgb(200, 199, 199);
-            }
+           
             .ht1{
-                width:750px;
+                width:1230px;
                 height: 290px;
                 border: 1px solid #000;
                 margin: 2px;
-                margin-left: -120px;
+                margin-left: -130px;
                 border-radius: 5px;
                 box-shadow: 5px 5px 2px -2px rgb(200, 199, 199),
                     -5px -5px 2px -2px rgb(200, 199, 199),
@@ -85,7 +75,29 @@
                 border-radius: 5px;
                 margin-top: -35px;
             }
+            .text4{
+                text-align: center;
+            }
 
+            .text5{
+                color: blue;
+            }
+            .text6{
+                width: 70px;
+                margin-left: 20px;
+                background-color: orange;
+                border: none;
+            }
+            .text7{
+                text-align: center;
+                font-size: 20px;
+                font-style: italic;
+                color: #f0f;
+                text-shadow: 0 0 5px #fff, 0 0 10px #f0f, 0 0 15px #0ff;
+            }
+            .col-md-12{
+                margin-left: 500px;               
+            }
         </style>
     </head>
     <body>
@@ -103,18 +115,8 @@
             </div>  
             <div class="rectangle"></div>
             <div class="row cc">
-                <div class="col-md-6">
-                    <div class="ht">
-                        <!-- Nội dung bên trong hình chữ nhật -->
-
-                        <div class="rec">
-                            <h2 class="text2">News</h2>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="col-md-6">
+                
+                <div class="col-md-12">
                     <div class="ht1">
 
                         <!-- Nội dung bên trong hình chữ nhật -->
@@ -122,19 +124,20 @@
                         <div class="rec1">
                             <h2 class="text2">Academic Information</h2>
                         </div>
-                        <div><h5>Information Access(Tra cứu thông tin)</h5></div>
+                        <div class="text4"><h3>Information Access(Tra cứu thông tin)</h3></div>
                         <div class="text3">
-<!--                            <div>
-                                <h7><a href="timetable">Weekly Timetable</a></h7><h7>(Thời khóa biểu từng tuần)</h7>
-                            </div>-->
-                           
 
 
 
-                            <h4>Enter useranme and password of Lecture or Student</h4>
+
+                            <h4 class="text5">Enter useranme and password of Lecture or Student</h4>
                             UserName: <input type="text" name="username"/><br/><br/><!-- comment -->
                             PassWord: <input type="text" name="password"/><br/><br/><!-- comment -->
-                            <input type="submit" value="Login"/>
+                            <input class="text6" type="submit" value="Login"/>
+
+                            <div class="text7">
+                                <h6 class="text7" style="color: red">${requestScope.error}</h6>
+                            </div>
                         </div>
                     </div>
                 </div>
