@@ -5,6 +5,7 @@
 package dao.timetable;
 
 import dao.*;
+import dao.attendence.AttendanceDBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,6 +52,44 @@ public class SessionDBContext extends DBContext {
         return list;
     }
 
+    public ArrayList<Session> getSessionByStudentidAndSubjectid(int id) {
+        ArrayList<Session> list = new ArrayList();
+        String sql = "select se.Date,se.IsTaken,t.TimeSlotID,r.RoomID,g.GroupID,te.TeacherID from Session as se\n"
+                + "join Student as s\n"
+                + "ON s.StudentID=se.StudentID\n"
+                + "join [Group] as g\n"
+                + "On g.GroupID=se.GroupID\n"
+                + "join Subject as a\n"
+                + "ON a.SubjectID=g.SubjectID\n"
+                + "Join TimeSlot as t\n"
+                + "ON t.TimeSlotID=se.TimeSlotID\n"
+                + "join Room as r\n"
+                + "ON r.RoomID=se.RoomID\n"
+                + "join Teacher as te\n"
+                + "On te.TeacherID=se.TeacherID\n"
+                + "where a.SubjectID=? and s.StudentID=13";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Session session = new Session();
+
+                session.setDate(rs.getDate("Date"));
+                session.setIsTaken(rs.getBoolean("IsTaken"));
+                session.setTimeslot(new TimeSlotDBContext().getTimeSlotByID(rs.getInt("TimeSlotID")));
+                session.setRoom(new RoomDBContext().getRoomByID(rs.getInt("RoomID")));
+                session.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
+                session.setTeacher(new TeacherDBContext().getByTeacherID(rs.getInt("TeacherID")));
+
+                list.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public Session getSessionByID(int id) {
 
         String sql = "select SessionID,Date,IsTaken,GroupID,TeacherID,RoomID,TimeSlotID\n"
@@ -78,42 +117,18 @@ public class SessionDBContext extends DBContext {
         return null;
     }
 
-   
-//    public static void main(String[] args) {
-//        // Tạo một đối tượng SessionDBContext
-//        SessionDBContext sessionDBContext = new SessionDBContext();
-//
-//        // Thay đổi biến id thành giá trị thích hợp
-////        int id = 1;
-////
-////        // Gọi phương thức getSessionByID
-////        Session session = sessionDBContext.getSessionByID(id);
-////
-////        // Kiểm tra xem session có tồn tại hay không
-////        if (session != null) {
-////            System.out.println("Session ID: " + session.getSessionID());
-////            System.out.println("Date: " + session.getDate().toString().trim());
-////            System.out.println("Is Taken: " + session.getIsTaken().toString().trim());
-////            System.out.println("Group ID: " + session.getGroup().toString().trim());
-////            System.out.println("Teacher ID: " + session.getTeacher().toString().trim());
-////
-////        } else {
-////            System.out.println("Session not found.");
-////        }
-//          
-//    }
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         // Tạo một đối tượng SessionDBContext
         SessionDBContext sessionDBContext = new SessionDBContext();
 
         // Gọi phương thức getSession
-        ArrayList<Session> sessions = sessionDBContext.getSession();
+        ArrayList<Session> sessions = sessionDBContext.getSessionByStudentidAndSubjectid(22);
 
         // In ra thông tin về các session
         for (Session session : sessions) {
-          
+
             System.out.println("Date: " + session.getDate());
-            
+
         }
     }
 
