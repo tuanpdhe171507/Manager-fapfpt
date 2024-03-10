@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Semeter;
 import model.Subject;
 
 /**
@@ -68,6 +69,9 @@ public class SubjectDBContext extends DBContext {
         }
         return list;
     }
+    
+   
+
 
      public static void main(String[] args) {
         // Tạo một đối tượng SubjectDBContext (giả sử bạn đã có một lớp này)
