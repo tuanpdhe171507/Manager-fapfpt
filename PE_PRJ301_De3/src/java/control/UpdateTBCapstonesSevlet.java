@@ -30,7 +30,7 @@ public class UpdateTBCapstonesSevlet  extends BaseAuthenticationCotroller{
        String capuserid= req.getParameter("userid");
        
        
-        TblCapstones capstones= new TblCapstones();
+       TblCapstones capstones= new TblCapstones();
        TblUsers tblUsers= new TblUsers();
        tblUsers.setUserId(capuserid);
        
