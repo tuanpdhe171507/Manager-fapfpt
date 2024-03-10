@@ -7,7 +7,6 @@ package dao.attendence;
 import com.sun.jdi.connect.spi.Connection;
 import dao.CampusDBContext;
 import dao.DBContext;
-import dao.timetable.FuntionVSDBContext;
 import dao.timetable.GroupDBContext;
 import dao.timetable.GroupStudentDBContext;
 import dao.timetable.RoomDBContext;
@@ -175,6 +174,7 @@ public class AttendanceDBContext extends DBContext {
         return list;
     }
 
+   
     public static void main(String[] args) {
         // Tạo một đối tượng AttendanceDBContext
         AttendanceDBContext context = new AttendanceDBContext();
