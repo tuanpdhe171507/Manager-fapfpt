@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author G5 5590
+ * @author G5 5590SubjectName
  */
 public class Subject {
     private int SubjectID;
