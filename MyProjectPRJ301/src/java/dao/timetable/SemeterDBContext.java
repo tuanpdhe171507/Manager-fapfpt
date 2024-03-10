@@ -43,7 +43,7 @@ public class SemeterDBContext extends DBContext {
         }
         return null;
     }
-    
+
     public ArrayList<Semeter> getSemetersByName() {
         ArrayList<Semeter> lists = new ArrayList<>();
         String sql = "select s.SemeterID, s.SemeterName,s.StartDate,s.EndDate from Semeter as s\n"
@@ -65,6 +65,7 @@ public class SemeterDBContext extends DBContext {
         return lists;
     }
 
+   
     public static void main(String[] args) {
         SemeterDBContext dbContext = new SemeterDBContext(); // Tạo một instance của lớp SemeterDBContext
 
