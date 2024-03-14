@@ -88,9 +88,10 @@
             }
             .text6{
                 width: 70px;
-                margin-left: 20px;
+                margin-left: 10px;
                 background-color: orange;
                 border: none;
+                margin-top: 5px;
             }
             .text7{
                 text-align: center;
@@ -117,6 +118,12 @@
             .ngan{
                 margin-top: 9px;
             }
+            .text10{
+                font-size: 18px;
+            }
+            .banc{
+                margin-top: 25px;
+            }
         </style>
     </head>
     <body>
@@ -134,7 +141,7 @@
             </div>  
             <div class="rectangle">
                 <div class="hehe">
-                    <input class="hoho" type="submit" value="Logout"/><h4 class="ngan">|</h4>
+                    <input class="hoho" type="submit" value="FPT-University"/><h4 class="ngan">|</h4>
                     <input class="hoho" type="button" value="CAMPUS: FPTU-Hòa Lạc"readonly/>
                 </div>
             </div>
@@ -144,7 +151,7 @@
                     <div class="ht1">
 
                         <!-- Nội dung bên trong hình chữ nhật -->
-<!--                        <div class="additional-line"></div>-->
+                        <!--                        <div class="additional-line"></div>-->
                         <div class="rec1">
                             <h2 class="text2">Academic Information</h2>
                         </div>
@@ -155,9 +162,22 @@
 
 
                             <h4 class="text5">Enter useranme and password of Lecture or Student</h4>
-                            UserName: <input type="text" name="username"/><br/><br/><!-- comment -->
-                            PassWord: <input type="text" name="password"/><br/><br/><!-- comment -->
-                            <input class="text6" type="submit" value="Login"/>
+                            <table class="banc">
+                                <tr>
+                                    <td class="text10">UserName:</td>
+                                    <td><input type="text" name="username"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="text10">PassWord:</td>
+                                    <td><input type="text" name="password"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="text6 text10" type="submit" value="Login"/></td>
+                                </tr>
+                            </table>
+
+                         
+                        
 
                             <div class="text7">
                                 <h6 class="text7" style="color: red">${requestScope.error}</h6>

@@ -138,6 +138,29 @@
             .text44{
                 color: blue;
             }
+             .hoho{
+                background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+            }
+            .haha{
+                 background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+                height: 35px;
+                width: 57px;
+            }
+            .hehe{
+
+                display: flex;
+                justify-content: right;
+
+            }
+            .ngan{
+                margin-top: 9px;
+            }
         </style>
         <script>
             function sendSemeterId(semeterId) {
@@ -184,7 +207,12 @@
                     </div>
                 </div>
             </div>  
-            <div class="rectangle"></div>
+            <div class="rectangle">
+                <div class="hehe">
+                    <a href="login"><input class="haha" value="Logout"/></a><h4 class="ngan">|</h4>
+                    <input class="hoho" type="button" value="CAMPUS: FPTU-Hòa Lạc" readonly/>
+                </div>
+            </div>
 
             <div class="text2">View attendance for Phan Đình Tuấn (tuanpdhe171507)</div>
 

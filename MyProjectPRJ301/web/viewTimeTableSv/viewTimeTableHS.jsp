@@ -162,6 +162,29 @@
             .text80{
                 color: red;
             }
+             .hoho{
+                background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+            }
+            .haha{
+                 background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+                height: 35px;
+                width: 57px;
+            }
+            .hehe{
+
+                display: flex;
+                justify-content: right;
+
+            }
+            .ngan{
+                margin-top: 9px;
+            }
         </style>
     </head>
     <body>
@@ -180,7 +203,13 @@
 
 
 
-            <div class="rectangle"></div>
+            <div class="rectangle">
+                 <div class="hehe">
+                    <a href="login"><input class="haha" value="Logout"/></a><h4 class="ngan">|</h4>
+                    <input class="hoho" type="button" value="CAMPUS: FPTU-Hòa Lạc" readonly/>
+                </div>
+
+            </div>
 
             <div class="container">
                 <div class="text7"> <h1>Activities for tuanpdhe171507 (Phan Đình Tuấn)</h1></div>

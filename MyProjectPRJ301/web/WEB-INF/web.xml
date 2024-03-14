@@ -40,6 +40,10 @@
         <servlet-name>MarkSVSevrlet</servlet-name>
         <servlet-class>control.Mark.MarkSVSevrlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>control.Logout.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/fapfpt</url-pattern>
@@ -79,5 +83,9 @@
     <servlet-mapping>
         <servlet-name>MarkSVSevrlet</servlet-name>
         <url-pattern>/marksv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>
