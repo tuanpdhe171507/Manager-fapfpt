@@ -6,19 +6,18 @@ package control.Mark;
 
 import dao.attendence.StudentDBContext;
 import dao.mark.GradeDBContext;
+import dao.timetable.GroupDBContext;
 import dao.timetable.SemeterDBContext;
-import dao.timetable.SubjectDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Grade;
+import model.Group;
 import model.Semeter;
 import model.Student;
-import model.Subject;
 
 /**
  *
@@ -37,19 +36,6 @@ public class MarkSevrlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MarkSevrlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MarkSevrlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,20 +50,46 @@ public class MarkSevrlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        SemeterDBContext semeterDBContext = new SemeterDBContext();
+        ArrayList<Semeter> lists = semeterDBContext.getSemetersByName();
+        request.setAttribute("listSemeter", lists);
+        if (lists != null) {
+            //int id = Integer.parseInt(request.getParameter("semeterId"));
+            GroupDBContext groupDBContext = new GroupDBContext();
+            ArrayList<Group> listSe2 = groupDBContext.getSemetersAndSubject(10);
+            request.setAttribute("listSubject", listSe2);
 
-        SemeterDBContext db = new SemeterDBContext();
-        ArrayList<Semeter> lists = db.getSemetersByName();
-        request.setAttribute("se", lists);
+        }
 
-        int studentid = Integer.parseInt(request.getParameter("studentid"));
-        request.setAttribute("studentid", studentid);
-        
-        StudentDBContext newBContext= new StudentDBContext();
-        
-        Student inforStudent=newBContext.getStudentByID(studentid);
-        request.setAttribute("inforstudent", inforStudent);
-        
-        request.getRequestDispatcher("viewMark/viewXemDiemSV.jsp").forward(request, response);
+        String stid = request.getParameter("studentid");
+        String stu = request.getParameter("studentID");
+        if (stu == null) {
+
+            request.setAttribute("studentID", stid);
+        } else {
+
+            StudentDBContext sb = new StudentDBContext();
+            int studentids = Integer.parseInt(stu);
+            Student s = sb.getStudentByID(studentids);
+            request.setAttribute("s", s);
+            request.setAttribute("studentID", stu);
+        }
+
+        if (request.getParameter("semeterId1ff") != null) {
+
+            int id1 = Integer.parseInt(request.getParameter("semeterId1ff"));
+            int studentid = Integer.parseInt(request.getParameter("studentID"));
+            GradeDBContext gdb = new GradeDBContext();
+
+            ArrayList<Grade> listGrades = gdb.listGrade(studentid, id1);
+            request.setAttribute("listGrade", listGrades);
+
+            float averageScore = gdb.calculateAverage(listGrades);
+            request.setAttribute("averageScore", averageScore);
+        }
+
+
+        request.getRequestDispatcher("viewMark/markViewLecture.jsp").forward(request, response);
     }
 
     /**
@@ -91,8 +103,30 @@ public class MarkSevrlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-       
+
+        SemeterDBContext semeterDBContext = new SemeterDBContext();
+        ArrayList<Semeter> lists = semeterDBContext.getSemetersByName();
+        request.setAttribute("listSemeter", lists);
+
+        int id = Integer.parseInt(request.getParameter("semeterId"));
+        GroupDBContext groupDBContext = new GroupDBContext();
+        ArrayList<Group> listSe = groupDBContext.getSemetersAndSubject(id);
+        request.setAttribute("listSubject", listSe);
+
+        String stid = request.getParameter("studentid");
+
+        String stu = request.getParameter("studentID");
+        if (stu == null) {
+            request.setAttribute("studentID", stid);
+        } else {
+//            StudentDBContext sb = new StudentDBContext();
+//            int studentids = Integer.parseInt(stu);
+//            Student s = sb.getStudentByID(studentids);
+//            request.setAttribute("s", s);
+            request.setAttribute("studentID", stu);
+        }
+         response.sendRedirect("mark");
+        //request.getRequestDispatcher("viewMark/markViewLecture.jsp").forward(request, response);
     }
 
     /**
