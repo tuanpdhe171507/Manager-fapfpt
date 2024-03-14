@@ -39,18 +39,22 @@
                 width: 100%;
             }
 
-           
+
             .ht1{
                 width:1230px;
                 height: 290px;
                 border: 1px solid #000;
                 margin: 2px;
                 margin-left: -130px;
+                border: none;
                 border-radius: 5px;
                 box-shadow: 5px 5px 2px -2px rgb(200, 199, 199),
                     -5px -5px 2px -2px rgb(200, 199, 199),
                     5px -5px 2px -2px rgb(200, 199, 199),
                     -5px 5px 2px -2px rgb(200, 199, 199);
+                background-image: url('https://daihoc.fpt.edu.vn/templates/fpt-university/images/header.jpg');
+                margin-top: 50px;
+
             }
             .additional-line {
                 width: 100%;
@@ -96,7 +100,22 @@
                 text-shadow: 0 0 5px #fff, 0 0 10px #f0f, 0 0 15px #0ff;
             }
             .col-md-12{
-                margin-left: 500px;               
+                margin-left: 500px;
+            }
+            .hoho{
+                background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+            }
+            .hehe{
+
+                display: flex;
+                justify-content: right;
+
+            }
+            .ngan{
+                margin-top: 9px;
             }
         </style>
     </head>
@@ -113,14 +132,19 @@
                     </div>
                 </div>
             </div>  
-            <div class="rectangle"></div>
+            <div class="rectangle">
+                <div class="hehe">
+                    <input class="hoho" type="submit" value="Logout"/><h4 class="ngan">|</h4>
+                    <input class="hoho" type="button" value="CAMPUS: FPTU-Hòa Lạc"readonly/>
+                </div>
+            </div>
             <div class="row cc">
-                
+
                 <div class="col-md-12">
                     <div class="ht1">
 
                         <!-- Nội dung bên trong hình chữ nhật -->
-                        <div class="additional-line"></div>
+<!--                        <div class="additional-line"></div>-->
                         <div class="rec1">
                             <h2 class="text2">Academic Information</h2>
                         </div>
