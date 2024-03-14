@@ -63,7 +63,7 @@
             .bang1{
                 width: 500px;
                 height: 100%;
-                margin-left: 200px;
+                margin-left: 140px;
             }
 
             .text4 {
@@ -184,13 +184,13 @@
                 width: 160px;
             }
             .text55{
-                width: 160px;
+                width: 166px;
             }
             .text66{
-                width: 154px;
+                width: 166px;
             }
             .text1000{
-                width: 185px;
+                width: 167px;
             }
             .text101{
                 width: 100px;
@@ -227,6 +227,40 @@
                 margin-left: -45px;
                 font-size: 25px;
             }
+            .bang11 {
+                width: 500px; /* Đặt độ rộng của bảng */
+                table-layout: fixed; /* Thiết lập bảng để không tự động điều chỉnh kích thước cột */
+            }
+
+            .bang11 td {
+                padding: 0px; /* Khoảng cách giữa nội dung và biên của các ô */
+                border: 1px solid black; /* Đường viền của ô */
+                text-align: left; /* Canh lề văn bản */
+                word-wrap: break-word; /* Tự động ngắt dòng khi cần thiết */
+            }
+
+            /* Độ rộng cố định cho các cột */
+            .bang11 td:nth-child(1), /* Cột 1 */
+            .bang11 td:nth-child(2), /* Cột 2 */
+            .bang11 td:nth-child(3) { /* Cột 3 */
+                width: 150px; /* Độ rộng cố định cho mỗi cột */
+            }
+             .hoho{
+                background-color:  rgba(0, 128, 0, 0.6);
+                border: none;
+                color: white;
+                margin-top: 10px;
+            }
+            .hehe{
+
+                display: flex;
+                justify-content: right;
+
+            }
+            .ngan{
+                margin-top: 9px;
+            }
+            
         </style>
 
         <script>
@@ -303,7 +337,12 @@
                     </div>
                 </div>
             </div>  
-            <div class="rectangle"></div>
+            <div class="rectangle">
+                <div class="hehe">
+                    <input class="hoho" type="submit" value="Logout"/><h4 class="ngan">|</h4>
+                    <input class="hoho" type="button" value="CAMPUS: FPTU-Hòa Lạc"readonly/>
+                </div>
+            </div>
 
             <div class="text2">View Mark for Phan Đình Tuấn (tuanpdhe171507)</div>
 
@@ -388,28 +427,28 @@
 
                                     <c:forEach items="${requestScope.listGrade}" var="i">
                                         <tr class="row2">
-                                            <td class="text888">${i.assessmentName}</td>
+                                            <td  class="text888 kk">${i.assessmentName}</td>
                                             <c:choose>
                                                 <c:when test="${i.assessmentName eq 'Workshop'}">
-                                                    <td>Workshop1</td>
+                                                    <td class="kk">Workshop1</td>
                                                 </c:when>
                                                 <c:when test="${i.assessmentName eq 'Exercise'}">
-                                                    <td>Exercise1</td>
+                                                    <td class="kk">Exercise1</td>
                                                 </c:when>
                                                 <c:when test="${i.assessmentName eq 'Progress test'}">
-                                                    <td>Progress test 1</td>
+                                                    <td class="kk">Progress test 1</td>
                                                 </c:when>
 
                                                 <c:when test="${i.assessmentName eq 'Assignment' and i.subjectid.subjectID == 22}">
-                                                    <td>Assignment 1</td>
+                                                    <td class="kk">Assignment 1</td>
                                                 </c:when>
                                                 <c:when test="${i.assessmentName eq 'Final Exam'  and i.subjectid.subjectID == 23}">
                                                     <c:choose>
                                                         <c:when test="${finalExamChanged}">
-                                                            <td>FE: GVR</td>
+                                                            <td class="kk">FE: GVR</td>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <td>FE: Listening</td>
+                                                            <td class="kk">FE: Listening</td>
                                                             <c:set var="finalExamChanged" value="true" />
                                                         </c:otherwise>
                                                     </c:choose>
@@ -420,10 +459,10 @@
                                                         <c:when test="${finalExamChanged12}">
 
 
-                                                            <td>FE: GVR</td>
+                                                            <td class="kk">FE: GVR</td>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <td>FE: Listening</td>                                              
+                                                            <td class="kk">FE: Listening</td>                                              
                                                             <c:set var="finalExamChanged12" value="true" />
                                                         </c:otherwise>
                                                     </c:choose>
@@ -431,10 +470,10 @@
 
 
                                                 <c:otherwise>
-                                                    <td class="text777">${i.assessmentName}<br>Total</td>
+                                                    <td class="text777 kk">${i.assessmentName}<br>Total</td>
                                                     </c:otherwise>
                                                 </c:choose>
-                                            <td class="text999">${Math.round(i.weight * 1000) / 10}%<br>Total:${Math.round(i.weight * 1000) / 10}</td>
+                                            <td class="text999 kk">${Math.round(i.weight * 1000) / 10}%<br>Total:${Math.round(i.weight * 1000) / 10}</td>
 
                                         </tr>
 
@@ -443,17 +482,17 @@
 
                                         <c:if test="${i.assessmentName eq 'Workshop'}">
                                             <tr class="row2">
-                                                <td></td>
-                                                <td>Workshop2<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:W1+W2=${Math.round(i.weight * 1000) / 10+Math.round(i.weight * 1000) / 10}</td>
+                                                <td class="kk"></td>
+                                                <td class="kk">Workshop2<br>Total</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:W1+W2=${Math.round(i.weight * 1000) / 10+Math.round(i.weight * 1000) / 10}</td>
 
                                             </tr>
                                         </c:if>
                                         <c:if test="${i.assessmentName eq 'Exercise'}">
                                             <tr class="row2">
-                                                <td></td>
-                                                <td>Exercise2<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:Ex1+Ex2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
+                                                <td class="kk"></td>
+                                                <td class="kk">Exercise2<br>Total</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:Ex1+Ex2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
 
                                             </tr>
 
@@ -461,46 +500,46 @@
                                         <c:if test="${i.assessmentName eq 'Progress test' and i.subjectid.subjectID == 25}">
 
                                             <tr class="row3 row2 text444">
-                                                <td></td>
+                                                <td class="kk"></td>
 
                                                 <td class="">Progress test 2<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2=${Math.round(i.weight * 1000) / 10+Math.round(i.weight * 1000) / 10}%</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2=${Math.round(i.weight * 1000) / 10+Math.round(i.weight * 1000) / 10}%</td>
 
                                             </tr>
                                         </c:if>
                                         <c:if test="${i.assessmentName eq 'Progress test' and i.subjectid.subjectID == 23}">
                                             <tr class="row2">
-                                                <td></td>
-                                                <td>Progress test 2<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
+                                                <td class="kk"></td>
+                                                <td class="kk">Progress test 2<br>Total</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
 
                                             </tr>
                                         </c:if>
                                         <c:if test="${i.assessmentName eq 'Progress test' and i.subjectid.subjectID == 22}">
 
                                             <tr class="row3 row2 text444">
-                                                <td></td>
+                                                <td class="kk"></td>
 
-                                                <td class="">Progress test 2</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:${Math.round(i.weight * 1000) / 10}%</td>
+                                                <td class="kk">Progress test 2</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:${Math.round(i.weight * 1000) / 10}%</td>
 
                                             </tr>
                                         </c:if>
                                         <c:if test="${i.assessmentName eq 'Progress test' and i.subjectid.subjectID == 22}">
 
                                             <tr class="row3 row2 text444">
-                                                <td></td>
+                                                <td class="kk"></td>
 
-                                                <td class="">Progress test 3<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2+P3=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
+                                                <td class="kk">Progress test 3<br>Total</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:P1+P2+P3=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
 
                                             </tr>
                                         </c:if>
                                         <c:if test="${i.assessmentName eq 'Assignment' and i.subjectid.subjectID == 22}">
                                             <tr class="row2">
-                                                <td></td>
-                                                <td>Assignment 2<br>Total</td>
-                                                <td>${Math.round(i.weight * 1000) / 10}%<br>Total:A1+A2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
+                                                <td class="kk"></td>
+                                                <td class="kk">Assignment 2<br>Total</td>
+                                                <td class="kk">${Math.round(i.weight * 1000) / 10}%<br>Total:A1+A2=${(Math.round(i.weight * 1000) / 10)+(Math.round(i.weight * 1000) / 10)}%</td>
 
                                             </tr>
                                         </c:if>
