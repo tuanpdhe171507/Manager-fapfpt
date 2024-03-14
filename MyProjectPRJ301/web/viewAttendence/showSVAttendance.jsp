@@ -60,7 +60,7 @@
                         <p>No attendance data available.</p>
                     </c:otherwise>
                 </c:choose>
-
+                
                 <table>
                     <tr class="row1">
                         <th>NO</th>
