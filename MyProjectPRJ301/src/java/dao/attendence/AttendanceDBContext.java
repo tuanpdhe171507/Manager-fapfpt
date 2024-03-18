@@ -175,20 +175,24 @@ public class AttendanceDBContext extends DBContext {
     }
 
    
-    public static void main(String[] args) {
-        // Tạo một đối tượng AttendanceDBContext
-        AttendanceDBContext context = new AttendanceDBContext();
-
-        // Gọi phương thức getFuntionList() và lưu trữ kết quả vào một danh sách
-        ArrayList<Attendence> attendanceList = context.getFuntionList();
-
-        // In ra thông tin từ danh sách
-        for (Attendence attendance : attendanceList) {
-            System.out.println("Date: " + attendance.getDateSQL());
-            System.out.println("Is Present: " + attendance.getIsPresent());
-            System.out.println("Subject ID: " + attendance.getSubject().getSubjectID());
-            System.out.println("TimeSlot ID: " + attendance.getTimeslot());
-            System.out.println("TimeSlot ID: " + attendance.getRoom());
+   public static void main(String[] args) {
+        // Tạo một đối tượng AttendanceDBContext để truy xuất dữ liệu từ cơ sở dữ liệu
+        AttendanceDBContext attendanceDBContext = new AttendanceDBContext();
+        
+        // Gọi phương thức AttendencesByID() để lấy thông tin về một điểm danh dựa trên ID
+        int attendanceID = 105; // ID của điểm danh cần lấy thông tin
+        Attendence attendance = attendanceDBContext.AttendencesByID(attendanceID);
+        
+        // In ra thông tin về điểm danh
+        if (attendance != null) {
+            System.out.println("AttendenceID: " + attendance.getAttendenceID());
+            System.out.println("IsPresent: " + attendance.getIsPresent());
+            System.out.println("RecordTime: " + attendance.getDatetime());
+            System.out.println("Comment: " + attendance.getComment());
+         
+       
+        } else {
+            System.out.println("Không tìm thấy điểm danh với ID = " + attendanceID);
         }
     }
 
