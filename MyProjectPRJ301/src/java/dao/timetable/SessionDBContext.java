@@ -52,6 +52,52 @@ public class SessionDBContext extends DBContext {
         return list;
     }
 
+    public ArrayList<Session> getSessionSV() {
+        ArrayList<Session> list = new ArrayList();
+        String sql = "SELECT \n"
+                + "    a.SessionID,\n"
+                + "    MAX(a.Date) AS Date,\n"
+                + "    CASE WHEN MAX(CAST(a.IsTaken AS INT)) = 1 THEN 1 ELSE 0 END AS IsTaken,\n"
+                + "    MAX(a.GroupID) AS GroupID,\n"
+                + "    MAX(a.TeacherID) AS TeacherID,\n"
+                + "    MAX(a.RoomID) AS RoomID,\n"
+                + "    MAX(a.TimeSlotID) AS TimeSlotID,\n"
+                + "    MAX(b.AttendenceID) AS AttendenceID,\n"
+                + "\n"
+                + "	    CASE WHEN MAX(CAST(b.isPresent AS INT)) = 1 THEN 1 ELSE 0 END AS isPresent\n"
+                + "	\n"
+                + "FROM \n"
+                + "    Session AS a\n"
+                + "left JOIN \n"
+                + "    Attendence AS b\n"
+                + "ON \n"
+                + "    a.SessionID = b.SessionID and b.StudentID = 13\n"
+                + "	\n"
+                + "GROUP BY \n"
+                + "    a.SessionID;";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Session session = new Session();
+                session.setSessionID(rs.getInt("SessionID"));
+                session.setDate(rs.getDate("Date"));
+                session.setIsTaken(rs.getBoolean("IsTaken"));
+                session.setGroup(new GroupDBContext().getGroupByID(rs.getInt("GroupID")));
+                session.setTeacher(new TeacherDBContext().getByTeacherID(rs.getInt("TeacherID")));
+                session.setRoom(new RoomDBContext().getRoomByID(rs.getInt("RoomID")));
+                session.setTimeslot(new TimeSlotDBContext().getTimeSlotByID(rs.getInt("TimeSlotID")));
+                session.setAttendence(new AttendanceDBContext().AttendencesByID(rs.getInt("AttendenceID")));
+
+                list.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public ArrayList<Session> getSessionByStudentidAndSubjectid(int id) {
         ArrayList<Session> list = new ArrayList();
         String sql = "select se.Date,se.IsTaken,t.TimeSlotID,r.RoomID,g.GroupID,te.TeacherID from Session as se\n"
@@ -117,19 +163,37 @@ public class SessionDBContext extends DBContext {
         return null;
     }
 
+//    public static void main(String[] args) {
+//        // Tạo một đối tượng SessionDBContext
+//        SessionDBContext sessionDBContext = new SessionDBContext();
+//
+//        // Gọi phương thức getSession
+//        ArrayList<Session> sessions = sessionDBContext.getSessionByStudentidAndSubjectid(22);
+//
+//        // In ra thông tin về các session
+//        for (Session session : sessions) {
+//
+//            System.out.println("Date: " + session.getDate());
+//
+//        }
+//    }
     public static void main(String[] args) {
-        // Tạo một đối tượng SessionDBContext
+        // Tạo một đối tượng SessionDBContext để truy xuất dữ liệu từ cơ sở dữ liệu
         SessionDBContext sessionDBContext = new SessionDBContext();
 
-        // Gọi phương thức getSession
-        ArrayList<Session> sessions = sessionDBContext.getSessionByStudentidAndSubjectid(22);
+        // Gọi phương thức getSessionSV() để lấy danh sách các phiên học
+        ArrayList<Session> sessions = sessionDBContext.getSessionSV();
 
-        // In ra thông tin về các session
+        // In ra thông tin về các phiên học
         for (Session session : sessions) {
-
+            System.out.println("SessionID: " + session.getSessionID());
             System.out.println("Date: " + session.getDate());
+            System.out.println("IsTaken: " + session.getIsTaken());
+            System.out.println("GroupID: " + session.getGroup().getGroupID());
+            System.out.println("TeacherID: " + session.getTeacher().getTeacherID());
 
+            System.out.println("AttendenceID: " + session.getAttendence());
+            System.out.println("-----------------------------------");
         }
     }
-
 }
