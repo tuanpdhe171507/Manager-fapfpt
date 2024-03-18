@@ -302,11 +302,11 @@
                                                     <c:set var="sessionDate" value="${session.date}" />
                                                     <c:set var="dayNow" value="${daynow}" />
 
-                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and session.isTaken}">
+                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and session.attendence.isPresent}">
                                                         <h6 class="text78">(attended)</h6>
                                                     </c:if>
 
-                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and !session.isTaken}">
+                                                    <c:if test="${(sessionDate.time lt dayNow.time ) and !session.attendence.isPresent}">
                                                         <h6 class="text79">(absent)</h6>
                                                     </c:if>
 
@@ -316,15 +316,15 @@
                                                         <h6 class="text79">(Not yet)</h6>
                                                     </c:if>
 
-                                                    <c:if test="${(sessionDate.time eq dayNow.time ) and session.isTaken}">
+                                                    <c:if test="${(sessionDate.time eq dayNow.time ) and session.attendence.isPresent}">
                                                         <h6 class="text78">(attended)</h6>
                                                     </c:if>
 
-                                                    <c:if test="${(sessionDate.time eq dayNow.time ) and !session.isTaken}">
+                                                    <c:if test="${(sessionDate.time eq dayNow.time )and (session.attendence.attendenceID ne null) and !session.attendence.isPresent}">
                                                         <h6 class="text79">(absent)</h6>
                                                     </c:if>
 
-                                                    <c:if test="${sessionDate.time eq dayNow.time and (session.isTaken ne false and session.isTaken ne true)}">
+                                                    <c:if test="${sessionDate.time eq dayNow.time and (session.attendence.attendenceID eq null)}">
                                                         <h6 class="text79">(Not yet)</h6>
                                                     </c:if>
 
