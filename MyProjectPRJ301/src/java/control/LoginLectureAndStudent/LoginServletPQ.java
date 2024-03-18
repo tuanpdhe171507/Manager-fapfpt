@@ -98,16 +98,7 @@ public class LoginServletPQ extends HttpServlet {
             session.setAttribute("userN", username);
             session.setAttribute("passW", password);
 
-//            Cookie c_user = new Cookie("username", username);
-//            Cookie c_pass = new Cookie("password", password);
-//            c_user.setMaxAge(3600*24*7);
-//            c_pass.setMaxAge(3600*24*7);
-//            response.addCookie(c_pass);
-//            response.addCookie(c_user);
-            //lấy dữ liệu và chuyển sang trang list ban đầu.
-//            StudentDBContex c = new StudentDBContex();
-//            List<Student> list = c.list();
-//            request.setAttribute("students", list);
+
             if (username.equalsIgnoreCase("sonnt") && password.equalsIgnoreCase("123")) {
 
                 Date currentDate = new Date();
@@ -175,6 +166,16 @@ public class LoginServletPQ extends HttpServlet {
                 SessionDBContext sessionDBContext = new SessionDBContext();
                 List<Session> listSessions = sessionDBContext.getSession();
                 request.setAttribute("sessions", listSessions);
+                
+                LocalDate currentDate1 = LocalDate.now();
+                int year1 = currentDate1.getYear();
+                int month1 = currentDate1.getMonthValue();
+                int day1 = currentDate1.getDayOfMonth();
+                Date currentDate2 = new Date(year1 - 1900, month1 - 1, day1);
+                java.sql.Date formattedDate = new java.sql.Date(currentDate2.getTime());
+                request.setAttribute("daynow", formattedDate);
+                
+                
                 request.getRequestDispatcher("viewAttendence/viewTKB.jsp").forward(request, response);
             } else if (username.equalsIgnoreCase("tuandphe171507") && password.equalsIgnoreCase("2003")) {
 
