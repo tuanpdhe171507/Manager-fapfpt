@@ -13,7 +13,7 @@ import dao.timetable.TimeSlotDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 import model.Login.Campus;
 import model.WeekTimeTable;
-import java.sql.*;
+
+import java.time.LocalDate;
 import model.Account;
-import model.Login.Login;
+
 import model.Role;
 import model.Session;
 import model.TimeSlot;
@@ -34,7 +35,7 @@ import model.TimeSlot;
  *
  * @author G5 5590
  */
-public class TimeTableSevrlet extends  BaseRBACController {
+public class TimeTableSevrlet extends BaseRBACController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -71,8 +72,7 @@ public class TimeTableSevrlet extends  BaseRBACController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account, ArrayList<Role> roles)
             throws ServletException, IOException {
         Date currentDate = new Date();
 
@@ -83,8 +83,6 @@ public class TimeTableSevrlet extends  BaseRBACController {
         List<Integer> listYear = db.getListYearTimeTables();
         request.setAttribute("years", listYear);
 
- 
-        
         List<WeekTimeTable> listDayAndMonth = db.getListDayAndMonthTimeTables(year);
         request.setAttribute("dayAndMonth", listDayAndMonth);
 
@@ -107,7 +105,7 @@ public class TimeTableSevrlet extends  BaseRBACController {
             java.sql.Date endDate = new java.sql.Date(endDateUtil.getTime());
 
             List<java.sql.Date> daysInWeek = db.getListDaysInWeek(startDate, endDate);
-            request.setAttribute("dates",daysInWeek);
+            request.setAttribute("dates", daysInWeek);
 
             List<String> daysAndMonths = new ArrayList<>();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM");
@@ -120,16 +118,16 @@ public class TimeTableSevrlet extends  BaseRBACController {
             System.out.println("Invalid date format.");
         }
 
-            java.util.Date startDateUtil = db.getByID(a).getStartDate();
-            java.util.Date endDateUtil = db.getByID(a).getEndDate();
+        java.util.Date startDateUtil = db.getByID(a).getStartDate();
+        java.util.Date endDateUtil = db.getByID(a).getEndDate();
 
-            // Chuyển đổi java.util.Date thành java.sql.Date
-            java.sql.Date startDate = new java.sql.Date(startDateUtil.getTime());
-            java.sql.Date endDate = new java.sql.Date(endDateUtil.getTime());
+        // Chuyển đổi java.util.Date thành java.sql.Date
+        java.sql.Date startDate = new java.sql.Date(startDateUtil.getTime());
+        java.sql.Date endDate = new java.sql.Date(endDateUtil.getTime());
 
-            List<java.sql.Date> daysInWeek = db.getListDaysInWeek(startDate, endDate);
-            request.setAttribute("dates",daysInWeek);
-         
+        List<java.sql.Date> daysInWeek = db.getListDaysInWeek(startDate, endDate);
+        request.setAttribute("dates", daysInWeek);
+
         CampusDBContext c = new CampusDBContext();
         List<Campus> list = c.listCampus();
         request.setAttribute("campus", list);
@@ -141,6 +139,15 @@ public class TimeTableSevrlet extends  BaseRBACController {
         SessionDBContext sessionDBContext = new SessionDBContext();
         List<Session> listSessions = sessionDBContext.getSession();
         request.setAttribute("sessions", listSessions);
+
+           LocalDate currentDate1 = LocalDate.now();
+                int year1 = currentDate1.getYear();
+                int month1 = currentDate1.getMonthValue();
+                int day1 = currentDate1.getDayOfMonth();
+                Date currentDate2 = new Date(year1 - 1900, month1 - 1, day1);
+                java.sql.Date formattedDate = new java.sql.Date(currentDate2.getTime());
+                request.setAttribute("daynow", formattedDate);
+
         request.getRequestDispatcher("viewAttendence/viewTKB.jsp").forward(request, response);
 
     }
@@ -153,8 +160,7 @@ public class TimeTableSevrlet extends  BaseRBACController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account, ArrayList<Role> roles)
             throws ServletException, IOException {
 
     }
@@ -164,11 +170,8 @@ public class TimeTableSevrlet extends  BaseRBACController {
      *
      * @return a String containing servlet description
      */
-  
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-   
 
 }
