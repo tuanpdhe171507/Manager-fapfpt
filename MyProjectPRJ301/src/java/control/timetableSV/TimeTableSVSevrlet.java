@@ -127,7 +127,7 @@ public class TimeTableSVSevrlet extends HttpServlet {
         request.setAttribute("slots", listSlot);
 
         SessionDBContext sessionDBContext = new SessionDBContext();
-        List<Session> listSessions = sessionDBContext.getSession();
+        List<Session> listSessions = sessionDBContext.getSessionSV();
         request.setAttribute("funtions", listSessions);
 
         LocalDate currentDate1 = LocalDate.now();
@@ -135,7 +135,7 @@ public class TimeTableSVSevrlet extends HttpServlet {
         int month1 = currentDate1.getMonthValue();
         int day1 = currentDate1.getDayOfMonth();
         Date currentDate2 = new Date(year1 - 1900, month1 - 1, day1);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       
         java.sql.Date formattedDate = new java.sql.Date(currentDate2.getTime());
         request.setAttribute("daynow", formattedDate);
 
