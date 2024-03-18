@@ -73,6 +73,19 @@
             .text8{
                 margin-top: -4px;
                 margin-bottom: 0px;
+
+            }
+            .text78{
+                color: green;
+                margin-top: 5px;
+                font-size: 16px;
+                margin-bottom: 0px;
+            }
+            .text79{
+                color: red;
+                margin-top: 5px;
+                font-size: 16px;
+                margin-bottom: 0px;
             }
         </style>
 
@@ -80,7 +93,7 @@
     </head>
     <body>
         <div class="container">
-            <form id="cc"  action="timetable">
+            <form id="cc" action="timetable">
                 <div  class="text2">
                     <div class="text3">
                         Campus:
@@ -161,13 +174,42 @@
                                             ${session.group.subject.code}-<input class="text6" type="submit" value="view Materials"/><br/>
                                             at ${session.room.name}<br/>
 
-                                            <h4 class="text8"><a href="attendence?sesid=${session.sessionID}">
-                                                    <c:if test="${session.isTaken}">Edit</c:if>
-                                                    <c:if test="${!session.isTaken}">Take</c:if>
-                                                    </a></h4>
+                                            <h4 class="text8">
+                                                <c:set var="sessionDate" value="${session.date}" />
+                                                <c:set var="dayNow" value="${daynow}" />
+                                                <c:set var="twoDaysAgo" value="${dayNow.time - 2 * 24 * 60 * 60 * 1000}" />
 
-                                                <div class="text7">                                           
-                                                    (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
+                                                <c:if test="${(sessionDate.time lt dayNow.time ) and session.isTaken}">
+                                                    <h6 class="text78">(attended)</h6>
+                                                </c:if>
+
+                                                <c:if test="${(sessionDate.time lt dayNow.time ) and !session.isTaken}">
+                                                    <h6 class="text79">(absent)</h6>
+                                                </c:if>
+
+                                                <c:if test="${(sessionDate.time gt dayNow.time )}">
+                                                    <h6 class="text79">(Not yet)</h6>
+                                                </c:if>
+
+                                                <c:if test="${(sessionDate.time eq dayNow.time ) and session.isTaken}">
+                                                    <h6 class="text78">(attended)</h6>
+                                                </c:if>
+
+
+
+
+
+                                                <c:if test="${sessionDate.time >= twoDaysAgo}">
+                                                    <a href="attendence?sesid=${session.sessionID}">
+                                                        <c:if test="${session.isTaken}">Edit</c:if>
+                                                        <c:if test="${!session.isTaken and (sessionDate.time lt dayNow.time ) }">Edit</c:if>
+                                                        <c:if test="${(sessionDate.time eq dayNow.time ) and !session.isTaken ne false and session.isTaken ne true}">Take</c:if>
+                                                        </a>
+                                                </c:if>
+                                            </h4>
+
+                                            <div class="text7">                                           
+                                                (${session.timeslot.timeStart}-${session.timeslot.timeEnd})
                                             </div>
                                             <c:set var="hasSession" value="true" />
                                         </c:if>
